@@ -18,15 +18,16 @@ def SignIn(request):
             password = request.POST.get('password')
 
             user = authenticate(username=username, password=password)
-
-            if user is None:
-                messages.error(request, "Wrong username or password. Please try again.")
-                return redirect('/authentication/signin/')
             
             login(request, user)
-            return redirect('/home')
+            return redirect('/authentication/')
 
     return render(request, 'signin.html')
 
 def SignUp(request):
     return render(request, 'signup.html')
+
+def SignOut(request):
+    logout(request)
+    messages.success(request, 'Successfully logged out.')
+    return redirect('/authentication/signin/')
