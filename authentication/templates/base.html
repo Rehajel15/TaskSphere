@@ -1,0 +1,279 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>{% block title %}Base{% endblock %}</title>
+        <meta name="description" content="{% block description %}Base file for the authentication pages.{% endblock %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
+
+        <style>
+            @font-face {
+                font-family: 'Roboto';
+                src: url('/static/font-families/Roboto/Roboto-Regular.ttf') format('truetype');
+            }
+
+            @font-face {
+                font-family: 'Roboto-Bold';
+                src: url('/static/font-families/Roboto/Roboto-Bold.ttf') format('truetype');
+            }
+
+            @keyframes appear {
+                0% {
+                    transform: translateY(100%); 
+                    opacity: 0; 
+                }
+                100% {
+                    transform: translateY(0); 
+                    opacity: 1;
+                }
+    
+            }
+
+            @keyframes appearWithoutMoving {
+                0% {
+                    opacity: 0; 
+                }
+                100% {
+                    opacity: 1;
+                }
+    
+            }
+
+            .alert {
+                padding: 15px;
+                background-color: #f44336; /* Red */
+                color: white;
+                margin-bottom: 15px;
+                position: relative;
+                border-radius: 4px;
+                text-align: center;
+                opacity: 1;
+                transition: transform 0.6s ease-out;
+            }
+    
+            .alert.success {background-color: #4CAF50;} /* Green */
+            .alert.info {background-color: #2196F3;} /* Blue */
+            .alert.warning {background-color: #ff9800;} /* Orange */
+    
+            .closebtn {
+                margin-left: 15px;
+                color: white;
+                font-weight: bold;
+                float: right;
+                font-size: 22px;
+                line-height: 20px;
+                cursor: pointer;
+                transition: 0.3s;
+            }
+    
+            .closebtn:hover {
+                color: black;
+            }
+
+            body {
+                font-family: 'Roboto';
+                background: url('/static/img/authentication-background.png') 50% 0 no-repeat fixed;
+                background-size: cover;
+                margin: 0px;
+                transition: 1s;
+            }
+
+            .authentication {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 50px;
+                animation: appear 0.7s ease-out 1;
+            }
+            
+
+            .authentication h1 {
+                color: rgba(255, 255, 255, 0.938);
+                text-decoration: underline;
+                font-size: 35px;
+                letter-spacing: 1px;
+                font-family: 'Roboto-Bold';
+            }
+
+            .main_container {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                margin-top: 140px;
+            }
+
+            .main {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                animation: appear 0.7s ease-out 1;
+                gap: 30px;
+                color: white;
+                font-size: 22px;
+                background-color: #00acb55d;
+                padding: 30px;
+                width: 500px;
+                border-radius: 12px;
+                border: 2px white solid;
+            }
+
+            .main a {
+                color: white;
+                font-weight: 800;
+                text-decoration: none;
+                position: relative;
+                font-family: 'Roboto-Bold';
+            }
+            
+            .main a::after {
+                content: '';
+                height: 3px;
+                width: 0;
+                background: #ffffff;
+                position: absolute;
+                left: 0;
+                bottom: -7px;
+                transition: 0.4s;
+            }
+
+            .main a:hover::after {
+                width: 100%;
+            }
+
+            .footer {
+                padding: 10px;
+                position: absolute;
+                bottom: 0;
+                color: white;
+                animation: appearWithoutMoving 1s ease-out 1;
+                background-color: gray;
+                border-top-right-radius: 16px;
+            }
+
+            .footer a {
+                color: white;   
+            }
+
+            .mainSignIn {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                animation: appear 0.7s ease-out 1;
+                color: white;
+                font-size: 22px;
+                background-color: #00000000;
+                border-radius: 12px;
+                border: 2px white solid;
+                height: 400px;
+                width: 400px;
+            }
+            .mainSignIn form {
+                width: 100%;
+                margin-top: 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                row-gap: 60px;
+            }
+
+            .mainSignIn form div {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                row-gap: 5px;
+                width: 100%;
+            }
+
+            .mainSignIn label {
+                text-align: center;
+            }
+
+            .mainSignIn form div input {
+                background-color: rgb(139, 139, 139);
+                height: 27px;
+                width: 60%;
+                border-radius: 8px;
+                border: 2px white solid;
+                color: white;
+                font-size: 20px;
+                text-align: center;
+            }
+
+            .mainSignIn form div button {
+                font-size: 20px;
+                background-color: rgb(0, 175, 0);
+                padding: 10px 40px;
+                border-radius: 8px;
+                color: white;
+                border: 2px green solid ;
+            }
+
+            .mainSignIn form div button:hover {
+                background-color: rgb(1, 211, 1);
+                cursor: pointer;
+                transition: 0.5s;
+            }
+
+            .mainSignIn form div button:active {
+                position: relative;
+                top: 2px;
+            }
+
+            .formContainer_footer {
+                width: 100%;
+                display: flex;
+                justify-content: end;
+                font-size: 18px;
+            }
+
+            .formContainer_footer a {
+                color: white;
+                margin-bottom: 8px;
+                margin-right: 8px;
+            }
+
+            
+        </style>
+    </head>
+    <body>
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}">
+                    <span class="closebtn" onclick="closeAlert(this)">&times;</span>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="authentication">
+            <h1>{% block header %}{% endblock %}</h1>
+        </div>
+        
+        {% block content %}{% endblock %}
+
+        <div class="footer">
+            <a href="">data usage</a>
+            <span>|</span>
+            <a href="">terms of service</a>
+            <span>|</span>
+            <a href="">copyright page</a>
+        </div>
+
+        <script async defer>
+            function closeAlert(element) {
+                let alert = element.parentElement;
+                alert.style.transform = 'translateY(-100%)';
+                setTimeout(function() {
+                    alert.style.display = 'none';
+                }, 600); // Waits till transition is over
+            }
+        </script>
+    </body>
+</html>

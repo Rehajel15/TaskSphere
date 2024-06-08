@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Sign In{% endblock %}
+{% block description %}TaskSphere's sign-in page.{% endblock %}
+{% block header %}Sign In{% endblock %}
+{% block content %}
+<div class="main_container">
+    <div class="mainSignIn">
+        <form method="post" action="/authentication/signin/">
+            {% csrf_token %}
+            <div>
+                <label for="username">Surname:</label>
+                <input name="username" required id="username" type="text">
+            </div>
+    
+            <div>
+                <label for="username">Password:</label>
+                <input required id="password" type="password">
+            </div>
+
+            <div>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+
+        <div class="formContainer_footer">
+            <a href="/authentication/signup">I don't have an account</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
