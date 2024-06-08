@@ -1,0 +1,23 @@
+{
+  "name": "tasksphere",
+  "version": "1.0.0",
+  "description": "TaskSphere is a dynamic task management and collaboration tool designed for businesses and startups. It functions like a virtual pinboard, allowing teams to efficiently organize, track, and collaborate on tasks. With a clean, intuitive interface and powerful features, TaskSphere helps streamline workflow and enhance productivity.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "TaskSphere": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rehajel15/TaskSphere.git"
+  },
+  "author": "Jannis Bönsch",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rehajel15/TaskSphere/issues"
+  },
+  "homepage": "https://github.com/Rehajel15/TaskSphere#readme",
+  "dependencies": {
+    "electron": "^30.1.0"
+  }
+}
