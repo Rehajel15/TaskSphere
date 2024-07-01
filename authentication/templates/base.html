@@ -8,6 +8,10 @@
         <meta name="description" content="{% block description %}Base file for the authentication pages.{% endblock %}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'bootstrap/bootstrap-5.3.3-dist/css/bootstrap.min.css' %}">
+        <script src="{% static 'bootstrap/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js' %}"></script>
+
 
         <style>
             @font-face {
@@ -43,34 +47,23 @@
             }
 
             .alert {
-                padding: 15px;
-                background-color: #f44336; /* Red */
-                color: white;
-                margin-bottom: 15px;
-                position: relative;
-                border-radius: 4px;
-                text-align: center;
                 opacity: 1;
                 transition: transform 0.6s ease-out;
             }
     
+            .alert.error {background-color: #f44336;}
             .alert.success {background-color: #4CAF50;} /* Green */
             .alert.info {background-color: #2196F3;} /* Blue */
             .alert.warning {background-color: #ff9800;} /* Orange */
     
             .closebtn {
-                margin-left: 15px;
-                color: white;
-                font-weight: bold;
-                float: right;
-                font-size: 22px;
                 line-height: 20px;
                 cursor: pointer;
                 transition: 0.3s;
             }
     
             .closebtn:hover {
-                color: black;
+                color: black !important;
             }
 
             body {
@@ -82,28 +75,25 @@
             }
 
             .authentication {
-                width: 100%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin-top: 50px;
                 animation: appear 0.7s ease-out 1;
             }
             
 
             .authentication h1 {
-                color: rgba(255, 255, 255, 0.938);
-                text-decoration: underline;
-                font-size: 35px;
-                letter-spacing: 1px;
                 font-family: 'Roboto-Bold';
             }
+
+            .footer {
+                animation: appearWithoutMoving 1s ease-out 1;
+            }
+
 
             .main_container {
                 display: flex;
                 justify-content: center;
                 width: 100%;
                 margin-top: 140px;
+                padding: 30px;
             }
 
             .main {
@@ -117,7 +107,6 @@
                 font-size: 22px;
                 background-color: #00acb55d;
                 padding: 30px;
-                width: 500px;
                 border-radius: 12px;
                 border: 2px white solid;
             }
@@ -143,20 +132,6 @@
 
             .main a:hover::after {
                 width: 100%;
-            }
-
-            .footer {
-                padding: 10px;
-                position: absolute;
-                bottom: 0;
-                color: white;
-                animation: appearWithoutMoving 1s ease-out 1;
-                background-color: gray;
-                border-top-right-radius: 16px;
-            }
-
-            .footer a {
-                color: white;   
             }
 
             .mainSignIn {
@@ -280,41 +255,61 @@
                 position: relative;
                 top: 2px;
             }
+
+            @media only screen and (max-width: 1000px) {
+                .main_container {
+                    margin-top: 70px;
+                }
+            }
+
+            @media only screen and (max-width: 650px) {
+                .main_container {
+                    margin-top: 70px;
+                }
+
+                .authentication {
+                    margin-top: 10px;
+                    padding: 10px;
+                }
+            }
             
         </style>
     </head>
     <body>
         {% if messages %}
-        <div class="messages">
+        <div id="messages" class="messages">
             {% for message in messages %}
-                <div class="alert {{ message.tags }}">
-                    <span class="closebtn" onclick="closeAlert(this)">&times;</span>
+                <div class="alert {{ message.tags }} alert-dismissible fade show text-light d-flex align-items-center justify-content-center fs-6 border-1 border-white" role="alert">
                     {{ message }}
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="" aria-label="" onclick="closeAlert(this)"></button>
                 </div>
             {% endfor %}
         </div>
         {% endif %}
 
-        <div class="authentication">
-            <h1>{% block header %}{% endblock %}</h1>
+        <div class="authentication d-flex justify-content-center mt-3 mt-md-5">
+            <h1 class="text-light text-decoration-underline">{% block header %}{% endblock %}</h1>
         </div>
         
         {% block content %}{% endblock %}
 
-        <div class="footer">
-            <a href="">data usage</a>
+        
+        <div class="footer bg-secondary text-light w-100 position-fixed bottom-0 d-flex align-items-center justify-content-evenly py-1">
+            <a class="text-decoration-none text-light" href="">data usage</a>
             <span>|</span>
-            <a href="">terms of service</a>
+            <a class=" text-decoration-none text-light" href="">terms of service</a>
             <span>|</span>
-            <a href="">copyright page</a>
+            <a class=" text-decoration-none text-light" href="">copyright page</a>
         </div>
 
         <script async defer>
             function closeAlert(element) {
                 let alert = element.parentElement;
+                let container = document.getElementById('messages')
                 alert.style.transform = 'translateY(-100%)';
                 setTimeout(function() {
                     alert.style.display = 'none';
+                    container.style.display = 'none'
                 }, 600); // Waits till transition is over
             }
         </script>
