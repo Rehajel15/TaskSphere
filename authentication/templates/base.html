@@ -88,33 +88,11 @@
             }
 
 
-            .main_container {
-                display: flex;
-                justify-content: center;
-                width: 100%;
-                margin-top: 140px;
-                padding: 30px;
-            }
-
             .main {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
                 animation: appear 0.7s ease-out 1;
-                gap: 30px;
-                color: white;
-                font-size: 22px;
-                background-color: #00acb55d;
-                padding: 30px;
-                border-radius: 12px;
-                border: 2px white solid;
             }
 
             .main a {
-                color: white;
-                font-weight: 800;
-                text-decoration: none;
                 position: relative;
                 font-family: 'Roboto-Bold';
             }
@@ -293,7 +271,6 @@
         
         {% block content %}{% endblock %}
 
-        
         <div class="footer bg-secondary text-light w-100 position-fixed bottom-0 d-flex align-items-center justify-content-evenly py-1">
             <a class="text-decoration-none text-light" href="">data usage</a>
             <span>|</span>
