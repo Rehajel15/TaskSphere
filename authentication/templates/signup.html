@@ -1,15 +1,21 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Sign Up{% endblock %}
 {% block description %}TaskSphere's sign-up page.{% endblock %}
 {% block header %}Sign Up{% endblock %}
 {% block content %}
-<div class="main_container">
-    <div class="mainSignUp">
-        <div>What do you want to do?</div>
-        <div class="buttonGroup">
-            <a href="#">Join an existing group</a>
-            <a href="#">Create a new group</a>
+<div class="container mt-3 mt-md-5 d-flex justify-content-center appearAnimation">
+    <div class="card text-center mb-3 bg-transparent border-1 border-white text-light mt-5" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title fs-5">What do you want to do?</h5>
+          <a href="#" class="btn btn-secondary border-1 border-white mt-3 fs-5 w-100">Join an existing group</a>
+          <a href="#" class="btn btn-secondary border-1 border-white mt-5 fs-5 w-100">Create a new group</a>
         </div>
     </div>
+</div>
+
+<div class="container appearAnimation d-flex align-items-center justify-content-start mt-5">
+    <img src="{% static 'icons/arrow-left.svg' %}" alt="Arrow-left">
+    <a class="text-white ms-1" href="/authentication/signin/">I already have an account</a>
 </div>
 {% endblock %}
