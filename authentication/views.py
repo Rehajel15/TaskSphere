@@ -37,6 +37,9 @@ def SignIn(request):
 def SignUp(request):
     return render(request, 'signup.html')
 
+def JoinGroup(request):
+    return render(request, 'joingroup.html')
+
 def SignOut(request):
     logout(request)
     messages.success(request, 'Successfully logged out.')
