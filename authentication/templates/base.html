@@ -36,6 +36,10 @@
     
             }
 
+            .appearAnimation {
+                animation: appear 0.7s ease-out 1;
+            }
+
             @keyframes appearWithoutMoving {
                 0% {
                     opacity: 0; 
@@ -44,6 +48,10 @@
                     opacity: 1;
                 }
     
+            }
+
+            .appearWithoutMovingAnimation {
+                animation: appearWithoutMoving 1s ease-out 1;
             }
 
             body {
@@ -72,24 +80,10 @@
     
             .closebtn:hover {
                 color: black !important;
-            }
-
-            .authentication {
-                animation: appear 0.7s ease-out 1;
-            }
-            
+            }         
 
             .authentication h1 {
                 font-family: 'Roboto-Bold';
-            }
-
-            .footer {
-                animation: appearWithoutMoving 1s ease-out 1;
-            }
-
-
-            .main {
-                animation: appear 0.7s ease-out 1;
             }
 
             .main a {
@@ -110,84 +104,6 @@
 
             .main a:hover::after {
                 width: 100%;
-            }
-
-            .mainSignIn {
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                animation: appear 0.7s ease-out 1;
-                color: white;
-                font-size: 22px;
-                background-color: #00000000;
-                border-radius: 12px;
-                border: 2px white solid;
-                height: 400px;
-                width: 400px;
-            }
-            .mainSignIn form {
-                width: 100%;
-                margin-top: 20px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                row-gap: 60px;
-            }
-
-            .mainSignIn form div {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                row-gap: 5px;
-                width: 100%;
-            }
-
-            .mainSignIn label {
-                text-align: center;
-            }
-
-            .mainSignIn form div input {
-                background-color: rgb(139, 139, 139);
-                height: 27px;
-                width: 60%;
-                border-radius: 8px;
-                border: 2px white solid;
-                color: white;
-                font-size: 20px;
-                text-align: center;
-            }
-
-            .mainSignIn form div button {
-                font-size: 20px;
-                background-color: rgb(0, 175, 0);
-                padding: 10px 40px;
-                border-radius: 8px;
-                color: white;
-                border: 2px green solid ;
-            }
-
-            .mainSignIn form div button:hover {
-                background-color: rgb(1, 211, 1);
-                cursor: pointer;
-                transition: 0.5s;
-            }
-
-            .mainSignIn form div button:active {
-                position: relative;
-                top: 2px;
-            }
-
-            .formContainer_footer {
-                width: 100%;
-                display: flex;
-                justify-content: end;
-                font-size: 18px;
-            }
-
-            .formContainer_footer a {
-                color: white;
-                margin-bottom: 8px;
-                margin-right: 8px;
             }
 
             .mainSignUp {
@@ -233,23 +149,6 @@
                 position: relative;
                 top: 2px;
             }
-
-            @media only screen and (max-width: 1000px) {
-                .main_container {
-                    margin-top: 70px;
-                }
-            }
-
-            @media only screen and (max-width: 650px) {
-                .main_container {
-                    margin-top: 70px;
-                }
-
-                .authentication {
-                    margin-top: 10px;
-                    padding: 10px;
-                }
-            }
             
         </style>
     </head>
@@ -265,13 +164,13 @@
         </div>
         {% endif %}
 
-        <div class="authentication d-flex justify-content-center mt-3 mt-md-5">
+        <div class="authentication appearAnimation d-flex justify-content-center mt-md-5 mt-4">
             <h1 class="text-light text-decoration-underline">{% block header %}{% endblock %}</h1>
         </div>
         
         {% block content %}{% endblock %}
 
-        <div class="footer bg-secondary text-light w-100 position-fixed bottom-0 d-flex align-items-center justify-content-evenly py-1">
+        <div class="footer appearWithoutMovingAnimation bg-secondary text-light w-100 position-fixed bottom-0 d-flex align-items-center justify-content-evenly py-1">
             <a class="text-decoration-none text-light" href="">data usage</a>
             <span>|</span>
             <a class=" text-decoration-none text-light" href="">terms of service</a>

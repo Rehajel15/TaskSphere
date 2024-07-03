@@ -14,18 +14,24 @@ def SignIn(request):
         return redirect('/authentication/')
     else:
         if request.method == 'POST':
-            username = request.POST.get('username')
-            password = request.POST.get('password')
+            email = request.POST.get('emailInput')
+            password = request.POST.get('passwordInput')
 
+            try:
+                username = User.objects.get(email=email).username
+            except User.DoesNotExist or user is None:
+                messages.error(request, "Wrong email or password. Please try again.")
+                return redirect('/authentication/signin/')
+            
             user = authenticate(username=username, password=password)
 
-            if user is not None:
+            if user is None:
+                messages.error(request, "Wrong email or password. Please try again.")
+                return redirect('/authentication/signin/')
+            else:
                 login(request, user)
                 return redirect('/authentication/home')
-            else:
-                messages.error(request, "Wrong username or password. Please try again.")
-                return redirect('/authentication/signin/')
-
+                
     return render(request, 'signin.html')
 
 def SignUp(request):
