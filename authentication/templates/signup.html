@@ -4,18 +4,14 @@
 {% block description %}TaskSphere's sign-up page.{% endblock %}
 {% block header %}Sign Up{% endblock %}
 {% block content %}
-<div class="container mt-3 mt-md-5 d-flex justify-content-center appearAnimation">
-    <div class="card text-center mb-3 bg-transparent border-1 border-white text-light mt-5" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title fs-5">What do you want to do?</h5>
-          <a href="joingroup/" class="btn btn-secondary border-1 border-white mt-3 fs-5 w-100">Join an existing group</a>
-          <a href="#" class="btn btn-secondary border-1 border-white mt-5 fs-5 w-100">Create a new group</a>
-        </div>
-    </div>
-</div>
-
-<div class="container appearAnimation d-flex align-items-center justify-content-start mt-5">
-    <img src="{% static 'icons/arrow-left.svg' %}" alt="Arrow-left">
-    <a class="text-white ms-1" href="/authentication/signin/">I already have an account</a>
-</div>
+<form action="/authentication/signup/", method="post">
+    {% csrf_token %}
+    <input id="emailInput" name="emailInput" type="email" placeholder="Email">
+    <input id="passwordInput" name="passwordInput" type="password" placeholder="Password">
+    <input id="firstnameInput" name="firstnameInput" type="text" placeholder="Firstname">
+    <input id="lastnameInput", name="lastnameInput" type="text" placeholder="Lastname">
+    <input id="biographyInput", name="biographyInput" type="text" placeholder="Biography">
+    <input id="profilePictureInput" name="profilePictureInput" type="file">
+    <button type="submit">Done</button>
+</form>
 {% endblock %}

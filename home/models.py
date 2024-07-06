@@ -16,7 +16,7 @@ class Group(models.Model):
     
 class Table(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    group = models.ForeignKey(Group, related_name='tables', on_delete=models.CASCADE)  # Conncetion to group
+    group = models.OneToOneField(Group, null=True, on_delete=models.CASCADE, editable=False) # Connect to Group
     
     def __str__(self):
         return str(self.id)

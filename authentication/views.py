@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from authentication.models import ExtendedUserInformation
 
 # Create your views here.
 
@@ -35,7 +36,27 @@ def SignIn(request):
     return render(request, 'signin.html')
 
 def SignUp(request):
+    if request.method == 'POST':
+        usernameInput = request.POST.get('lastnameInput')
+        emailInput = request.POST.get('emailInput')
+        passwordInput = request.POST.get('passwordInput')
+        firstnameInput = request.POST.get('firstnameInput')
+        lastnameInput = request.POST.get('lastnameInput')
+        biographyInput = request.POST.get('biographyInput')
+        profilePictureInput = request.POST.get('profilePictureInput')
+
+        myuser = User.objects.create_user(username=usernameInput, email=emailInput, password=passwordInput)
+        myuser.first_name = firstnameInput 
+        myuser.last_name = lastnameInput
+
+        myuser.save()
+
+        ExtendedUserInformation.objects.create(user=myuser, biography=biographyInput, profile_picture=profilePictureInput)
+        
     return render(request, 'signup.html')
+
+def ChooseGroupAction(request):
+    return render(request, 'chooseGroupAction.html')
 
 def JoinGroup(request):
     return render(request, 'joingroup.html')
