@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-from django.contrib.auth.models import Group
+from home.models import Group
 from django.utils import timezone
 
 class CustomUserManager(BaseUserManager):
