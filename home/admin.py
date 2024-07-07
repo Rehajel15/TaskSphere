@@ -1,6 +1,5 @@
 from django.contrib import admin
 from .models import Group, Table, Table_taskColumn, Table_task
-from authentication.models import ExtendedUserInformation
 
 class TableTaskInline(admin.TabularInline):
     model = Table_task

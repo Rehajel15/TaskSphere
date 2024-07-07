@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from authentication.models import ExtendedUserInformation
+
 
 # Create your views here.
 
@@ -51,7 +51,7 @@ def SignUp(request):
 
         myuser.save()
 
-        ExtendedUserInformation.objects.create(user=myuser, biography=biographyInput, profile_picture=profilePictureInput)
+        
         
     return render(request, 'signup.html')
 
