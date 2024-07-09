@@ -23,6 +23,7 @@ class GroupAdmin(admin.ModelAdmin):
     list_display = ('group_name', 'givenID', 'group_description', 'group_password', 'created_on', 'id')
     readonly_fields = ('created_on', 'id')
     search_fields = ('group_name', 'givenID')
+    filter_horizontal = ('workers',)
     inlines = [TableInline]
 
 class TableAdmin(admin.ModelAdmin):

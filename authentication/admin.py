@@ -1,12 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from django.contrib.auth.models import Group
 from .models import CustomUser
 
 class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('biography', 'profile_picture', 'in_group')}),
+        ('Personal info', {'fields': ('firstname', 'lastname', 'biography', 'profile_picture', 'in_group')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
@@ -17,7 +16,7 @@ class UserAdmin(BaseUserAdmin):
         }),
     )
     list_display = ('email', 'is_staff', 'is_superuser', 'in_group')
-    search_fields = ('email', 'biography')
+    search_fields = ('email',)
     ordering = ('email',)
 
 admin.site.register(CustomUser, UserAdmin)

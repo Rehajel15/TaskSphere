@@ -23,6 +23,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     biography = models.TextField(null=True, blank=True)
     profile_picture = models.ImageField(null=True, blank=True, upload_to="images/")
+    firstname = models.CharField(max_length=20)
+    lastname = models.CharField(max_length=20)
     in_group = models.OneToOneField(Group, null=True, blank=True, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

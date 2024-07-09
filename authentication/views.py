@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
+from authentication.models import CustomUser
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
@@ -17,27 +17,20 @@ def SignIn(request):
         if request.method == 'POST':
             email = request.POST.get('emailInput')
             password = request.POST.get('passwordInput')
-
-            try:
-                username = User.objects.get(email=email).username
-            except User.DoesNotExist or user is None:
-                messages.error(request, "Wrong email or password. Please try again.")
-                return redirect('/authentication/signin/')
             
-            user = authenticate(username=username, password=password)
+            user = authenticate(username=email, password=password)
 
             if user is None:
                 messages.error(request, "Wrong email or password. Please try again.")
                 return redirect('/authentication/signin/')
             else:
                 login(request, user)
-                return redirect('/authentication/home')
+                return redirect('/home')
                 
     return render(request, 'signin.html')
 
 def SignUp(request):
     if request.method == 'POST':
-        usernameInput = request.POST.get('lastnameInput')
         emailInput = request.POST.get('emailInput')
         passwordInput = request.POST.get('passwordInput')
         firstnameInput = request.POST.get('firstnameInput')
@@ -45,13 +38,19 @@ def SignUp(request):
         biographyInput = request.POST.get('biographyInput')
         profilePictureInput = request.POST.get('profilePictureInput')
 
-        myuser = User.objects.create_user(username=usernameInput, email=emailInput, password=passwordInput)
-        myuser.first_name = firstnameInput 
-        myuser.last_name = lastnameInput
+        my_user = CustomUser.objects.create(
+            email = emailInput,
+            password = passwordInput,
+            firstname = firstnameInput,
+            lastname = lastnameInput,
+            biography = biographyInput,
+            profile_picture = profilePictureInput,
+        )
 
-        myuser.save()
+        my_user.firstname
 
-        
+
+
         
     return render(request, 'signup.html')
 

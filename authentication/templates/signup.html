@@ -4,14 +4,44 @@
 {% block description %}TaskSphere's sign-up page.{% endblock %}
 {% block header %}Sign Up{% endblock %}
 {% block content %}
-<form action="/authentication/signup/", method="post">
-    {% csrf_token %}
-    <input id="emailInput" name="emailInput" type="email" placeholder="Email">
-    <input id="passwordInput" name="passwordInput" type="password" placeholder="Password">
-    <input id="firstnameInput" name="firstnameInput" type="text" placeholder="Firstname">
-    <input id="lastnameInput", name="lastnameInput" type="text" placeholder="Lastname">
-    <input id="biographyInput", name="biographyInput" type="text" placeholder="Biography">
-    <input id="profilePictureInput" name="profilePictureInput" type="file">
-    <button type="submit">Done</button>
-</form>
+<div class="container text-white mt-3 mt-lg-5 pb-5">
+    <form action="/authentication/signup/", method="post" class="row g-md-5 g-4">
+        {% csrf_token %}
+        <div class="col-md-6">
+            <label for="emailInput" class="form-label">Email address</label>
+            <input required class="form-control" id="emailInput" name="emailInput" type="email" placeholder="name@example.com">
+        </div>
+        <div class="col-md-6">
+            <label for="passwordInput" class="form-label">Password</label>
+            <input required class="form-control" id="passwordInput" name="passwordInput" type="password" aria-describedby="passwordHelp" placeholder="Password">
+            <div id="passwordHelp" class="form-text text-white-50">Must include at least 10 characters and numbers and letters</div>
+        </div>
+
+        <div class="col-md-6">
+            <label for="firstnameInput" class="form-label">Firstname</label>
+            <input required class="form-control" id="firstnameInput" name="firstnameInput" type="text" placeholder="Firstname">
+        </div>
+
+        <div class="col-md-6">
+            <label for="lastnameInput" class="form-label">Lastname</label>
+            <input required class="form-control" id="lastnameInput", name="lastnameInput" type="text" placeholder="Lastname">
+        </div>
+        
+        <div class="col-md-12">
+            <label for="biographyInput" class="form-label">Biography <span class="text-white-50">(optional)</span></label>       
+            <textarea id="biographyInput" name="biographyInput" class="form-control" placeholder="I'm using TaskSphere!" rows="3"></textarea> 
+        </div>
+
+        <div class="col-lg-8 col-12">
+            <label for="profilePictureInput" class="form-label">Profile picture <span class="text-white-50">(optional)</span></label>
+            <div class="input-group">
+                <input type="file" class="form-control" id="profilePictureInput" name="profilePictureInput" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+            </div>
+        </div>
+
+        <div class="col-md-12 d-flex justify-content-center">
+            <button type="submit" class="btn btn-lg btn-primary border-1 border-white">Submit</button>
+        </div>
+    </form>
+</div>
 {% endblock %}

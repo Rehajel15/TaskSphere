@@ -10,6 +10,7 @@ class Group(models.Model):
     group_password = models.CharField(max_length=30)
     group_description = models.CharField(max_length=150)
     created_on = models.DateTimeField(default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'), editable=False)
+    workers = models.ManyToManyField('authentication.CustomUser', related_name='assigned_groups')
 
     def __str__(self):
         return f"{self.group_name} || {self.givenID}"
