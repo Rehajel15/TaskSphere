@@ -4,7 +4,7 @@
 {% block description %}TaskSphere's sign-up page.{% endblock %}
 {% block header %}Sign Up{% endblock %}
 {% block content %}
-<div class="container text-white mt-3 mt-lg-5 pb-5">
+<div class="container appearAnimation text-white mt-3 mt-lg-5">
     <form action="/authentication/signup/", method="post" class="row g-md-5 g-4">
         {% csrf_token %}
         <div class="col-md-6">
@@ -43,5 +43,9 @@
             <button type="submit" class="btn btn-lg btn-primary border-1 border-white">Submit</button>
         </div>
     </form>
+</div>
+<div class="container appearAnimation d-flex align-items-center justify-content-start mb-5 mt-4 mt-md-5">
+    <img src="{% static 'icons/arrow-left.svg' %}" alt="Arrow-left">
+    <a class="text-white ms-1" href="/authentication/signin/">I already have an account</a>
 </div>
 {% endblock %}
