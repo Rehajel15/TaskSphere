@@ -25,40 +25,61 @@ def SignIn(request):
                 return redirect('/authentication/signin/')
             else:
                 login(request, user)
-                return redirect('/home')
+                if user.in_group is None:  # in_group is empty
+                    return redirect('/authentication/signup/choosegroupaction')
+                else:
+                    return redirect('/home')
                 
     return render(request, 'signin.html')
 
 def SignUp(request):
-    if request.method == 'POST':
-        emailInput = request.POST.get('emailInput')
-        passwordInput = request.POST.get('passwordInput')
-        firstnameInput = request.POST.get('firstnameInput')
-        lastnameInput = request.POST.get('lastnameInput')
-        biographyInput = request.POST.get('biographyInput')
-        profilePictureInput = request.POST.get('profilePictureInput')
+    if request.user.is_authenticated:
+        messages.error(request, f"You can't sign in because you already are. To do this please sign out.")
+        return redirect('/authentication/')
+    else:
+        if request.method == 'POST':
+            emailInput = request.POST.get('emailInput')
+            passwordInput = request.POST.get('passwordInput')
+            passwordInput2 = request.POST.get('passwordInput2')
+            firstnameInput = request.POST.get('firstnameInput')
+            lastnameInput = request.POST.get('lastnameInput')
+            biographyInput = request.POST.get('biographyInput')
+            profilePictureInput = request.POST.get('profilePictureInput')
 
-        my_user = CustomUser.objects.create(
-            email = emailInput,
-            password = passwordInput,
-            firstname = firstnameInput,
-            lastname = lastnameInput,
-            biography = biographyInput,
-            profile_picture = profilePictureInput,
-        )
-
-        my_user.firstname
-
-
-
-        
-    return render(request, 'signup.html')
+            my_user = CustomUser.objects.create(
+                email = emailInput,
+                password = passwordInput,
+                firstname = firstnameInput,
+                lastname = lastnameInput,
+                biography = biographyInput,
+                profile_picture = profilePictureInput,
+            )
+            my_user.save()
+            messages.success(request, "Account created successfully.")
+            return redirect('/authentication/signin/')   
+        return render(request, 'signup.html')
 
 def ChooseGroupAction(request):
-    return render(request, 'chooseGroupAction.html')
+    if request.user.is_authenticated:
+        if request.user.in_group is not None:
+            messages.error(request, "You already part of a group. Please leave the group first.")
+            return redirect('/authentication/')
+        else:
+            return render(request, 'chooseGroupAction.html')
+    else:
+        messages.error(request, "To have access to this page you need to sign in.")
+        return redirect('/authentication/signin/')
 
 def JoinGroup(request):
-    return render(request, 'joingroup.html')
+    if request.user.is_authenticated:
+        if request.user.in_group is not None:
+            messages.error(request, "You already part of a group. Please leave the group first.")
+            return redirect('/authentication/')
+        else:
+            return render(request, 'joingroup.html')
+    else:
+        messages.error(request, "To have access to this page you need to sign in.")
+        return redirect('/authentication/signin/')
 
 def SignOut(request):
     logout(request)

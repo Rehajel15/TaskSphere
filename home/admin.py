@@ -16,8 +16,6 @@ class TableInline(admin.TabularInline):
     def has_add_permission(self, request, obj=None):
         return False
 
-    def has_delete_permission(self, request, obj=None):
-        return False
     
 class GroupAdmin(admin.ModelAdmin):
     list_display = ('group_name', 'givenID', 'group_description', 'group_password', 'created_on', 'id')
@@ -35,8 +33,6 @@ class TableAdmin(admin.ModelAdmin):
     def has_add_permission(self, request, obj=None):
         return False
 
-    def has_delete_permission(self, request, obj=None):
-        return False
 
 admin.site.register(Group, GroupAdmin)
 admin.site.register(Table, TableAdmin)
