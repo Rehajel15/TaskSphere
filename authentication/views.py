@@ -59,13 +59,13 @@ def SignUp(request):
                 return render(request, 'signup.html', {'profile': post_data})
             
             elif len(post['emailInput']) >= 30:
-                messages.error(request, "Email adress is to long.")
+                messages.error(request, "Email adress is too long.")
                 post_data = {key: value for key, value in post.items() if key != 'emailInput'}
                 return render(request, 'signup.html', {'profile': post_data})
             
-            elif len(post['passwordInput']) < 10 or not post['passwordInput'].isalpha() and not post['passwordInput'].isdigit():
-                messages.error(request, "Password is to short or includes no numbers and letters")
-                post_data = {key: value for key, value in post.items() if key != 'passwordInput' or 'passwordInput2'}
+            elif len(post['passwordInput']) < 10 or not any(char.isalpha() for char in post['passwordInput']) or not any(char.isdigit() for char in post['passwordInput']):
+                messages.error(request, "Password is too short or includes no numbers and letters")
+                post_data = {key: value for key, value in post.items() if key not in ['passwordInput', 'passwordInput2']}
                 return render(request, 'signup.html', {'profile': post_data})
             
             else:
