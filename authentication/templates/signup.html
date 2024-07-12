@@ -5,15 +5,15 @@
 {% block header %}Sign Up{% endblock %}
 {% block content %}
 <div class="container appearAnimation text-white mt-3 mt-lg-5">
-    <form action="/authentication/signup/", method="post" class="row g-md-5 g-4">
+    <form action="/authentication/signup/", method="post" class="row g-md-5 g-4" enctype="multipart/form-data>
         {% csrf_token %}
         <div class="col-md-6">
             <label for="emailInput" class="form-label">Email address</label>
-            <input required class="form-control" id="emailInput" name="emailInput" type="email" placeholder="name@example.com">
+            <input value="{{profile.emailInput}}" required class="form-control" id="emailInput" name="emailInput" type="email" placeholder="name@example.com">
         </div>
         <div class="col-md-6">
             <label for="passwordInput" class="form-label">Password</label>
-            <input required class="form-control" id="passwordInput" name="passwordInput" type="password" aria-describedby="passwordHelp" placeholder="Password">
+            <input value="{{profile.passwordInput}}" required class="form-control" id="passwordInput" name="passwordInput" type="password" aria-describedby="passwordHelp" placeholder="Password">
             <div id="passwordHelp" class="form-text text-white-50">Must include at least 10 characters and numbers and letters</div>
         </div>
 
@@ -21,28 +21,28 @@
 
         <div class="col-md-6 col-12">
             <label for="passwordInput2" class="form-label">Repeat password</label>
-            <input required class="form-control" id="passwordInput2" name="passwordInput2" type="password" aria-describedby="passwordHelp" placeholder="Password">
+            <input value="{{profile.passwordInput2}}" required class="form-control" id="passwordInput2" name="passwordInput2" type="password" aria-describedby="passwordHelp" placeholder="Password">
         </div>
 
         <div class="col-md-6">
             <label for="firstnameInput" class="form-label">Firstname</label>
-            <input required class="form-control" id="firstnameInput" name="firstnameInput" type="text" placeholder="Firstname">
+            <input value="{{profile.firstnameInput}}" required class="form-control" id="firstnameInput" name="firstnameInput" type="text" placeholder="Firstname">
         </div>
 
         <div class="col-md-6">
             <label for="lastnameInput" class="form-label">Lastname</label>
-            <input required class="form-control" id="lastnameInput", name="lastnameInput" type="text" placeholder="Lastname">
+            <input value="{{profile.lastnameInput}}" required class="form-control" id="lastnameInput", name="lastnameInput" type="text" placeholder="Lastname">
         </div>
         
         <div class="col-md-12">
             <label for="biographyInput" class="form-label">Biography <span class="text-white-50">(optional)</span></label>       
-            <textarea id="biographyInput" name="biographyInput" class="form-control" placeholder="I'm using TaskSphere!" rows="3"></textarea> 
+            <textarea id="biographyInput" name="biographyInput" class="form-control" placeholder="I'm using TaskSphere!" rows="3">{{profile.biographyInput}}</textarea> 
         </div>
 
         <div class="col-lg-8 col-12">
             <label for="profilePictureInput" class="form-label">Profile picture <span class="text-white-50">(optional)</span></label>
             <div class="input-group">
-                <input type="file" class="form-control" id="profilePictureInput" name="profilePictureInput" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                <input value="{{profile.profilePictureInput}}"  type="file" class="form-control" id="profilePictureInput" name="profilePictureInput" aria-label="Upload">
             </div>
         </div>
 
