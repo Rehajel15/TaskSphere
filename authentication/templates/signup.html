@@ -100,6 +100,6 @@
 </div>
 <div class="container appearAnimation d-flex align-items-center justify-content-start mb-5 mt-4 mt-md-5">
     <img src="{% static 'icons/arrow-left.svg' %}" alt="Arrow-left">
-    <a class="text-white ms-1" href="/authentication/signin/">I already have an account</a>
+    <a class="text-white ms-1" href="{% url 'signin' %}">I already have an account</a>
 </div>
 {% endblock %}

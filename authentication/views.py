@@ -17,6 +17,18 @@ def SignIn(request):
         if request.method == 'POST':
             email = request.POST['emailInput']
             password = request.POST['passwordInput']
+            errorType = None
+
+            if len(email) > 30:
+                messages.error(request, 'The entered email address is too long.')
+                errorType = 'emailTooLong'
+                return render(request, 'signin.html', {'errorType': errorType, 'password': password})
+            
+            if len(password) > 100:
+                messages.error(request, 'The entered password is too long.')
+                errorType = 'passwordTooLong'
+                return render(request, 'signin.html', {'errorType': errorType, 'email': email})
+            
 
             user = authenticate(request, email=email, password=password)
 
@@ -55,7 +67,7 @@ def SignUp(request):
             post_data['errorType'] = 'emailExists'
             return render(request, 'signup.html', {'post': post_data})
 
-        if len(post['emailInput']) >= 30:
+        if len(post['emailInput']) > 30:
             messages.error(request, "Email address is too long.")
             post_data = {key: value for key, value in post.items() if key != 'emailInput'}
             post_data['errorType'] = 'emailAddressTooLong'
@@ -73,7 +85,7 @@ def SignUp(request):
             post_data['errorType'] = 'invalidPassword'
             return render(request, 'signup.html', {'post': post_data})
         
-        if len(post['passwordInput']) >= 40 :
+        if len(post['passwordInput']) > 100 :
             messages.error(request, "Sorry but your password is too long.")
             post_data = {key: value for key, value in post.items() if key not in ['passwordInput', 'passwordInput2']}
             post_data['errorType'] = 'passwordTooLong'
@@ -107,7 +119,7 @@ def SignUp(request):
         )
         new_user.save()
         messages.success(request, "Account created successfully.")
-        return redirect('signup_pp')
+        return redirect('/')
 
     return render(request, 'signup.html')
 
