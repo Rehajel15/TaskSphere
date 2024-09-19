@@ -5,101 +5,14 @@
 {% block header %}Sign Up{% endblock %}
 {% block content %}
 <div class="container appearAnimation text-white mt-3 mt-lg-5">
-    <form action="/authentication/signup/", method="post" class="row g-md-5 g-4" enctype="multipart/form-data">
+    <form method="post" action="{% url 'signup' %}">
         {% csrf_token %}
-
-        <div class="col-md-6">
-            <label for="emailInput" class="form-label">Email address</label>
-            {% if post.errorType == 'emailExists' or post.errorType == 'emailAddressTooLong' %}
-            <input required class="form-control is-invalid" id="emailInput" name="emailInput" type="email" placeholder="name@example.com" aria-describedby="emailHelp">
-            <div id="emailHelp" class="invalid-feedback">
-                {% if post.errorType == 'emailExists' %}
-                Account with this email address already exists.
-                {% elif post.errorType == 'emailAddressTooLong' %}
-                The email address is too long.
-                {% endif %}
-            </div>
-            {% else %}
-            <input required class="form-control" id="emailInput" name="emailInput" type="email" value="{{post.emailInput}}" placeholder="name@example.com" aria-describedby="emailFeedback">
-            <div id="emailFeedback" class="form-text text-white-50">Your email is only visible for people in your group.</div>
-            {% endif %}
-        </div>
-        
-        {% if post.errorType == 'passwordUnequal' or post.errorType == 'invalidPassword' or post.errorType == 'passwordTooLong' %}
-        <div class="col-md-6">
-            <label for="passwordInput" class="form-label">Password</label>
-            <input value="{% if post.errorType == 'passwordUnequal' %}{{post.passwordInput}}{% endif %}" required class="form-control is-invalid" id="passwordInput" name="passwordInput" type="password" aria-describedby="passwordHelp" placeholder="Password">
-            <div id="passwordHelp" class="invalid-feedback">
-                {% if post.errorType == 'invalidPassword' %}
-                Password is too short or/and includes no numbers and letters.
-                {% elif post.errorType == 'passwordTooLong' %}
-                Sorry but your password is too long.
-                {% endif %}
-            </div>
-        </div>
-
-        <div class="col-md-6 d-md-block d-none"></div>
-
-        <div class="col-md-6 col-12">
-            <label for="passwordInput2" class="form-label">Repeat password</label>
-            <input required class="form-control is-invalid" id="passwordInput2" name="passwordInput2" type="password" aria-describedby="passwordHelp2" placeholder="Password">
-            {% if post.errorType == 'passwordUnequal' %}
-            <div id="passwordHelp2" class="invalid-feedback">You repeated the wrong password.</div>
-            {% endif %}
-        </div>  
-        {% else %}
-        <div class="col-md-6">
-            <label for="passwordInput" class="form-label">Password</label>
-            <input value="{{post.passwordInput}}" required class="form-control" id="passwordInput" name="passwordInput" type="password" aria-describedby="passwordHelp" placeholder="Password">
-            <div id="passwordHelp" class="form-text text-white-50">Must include at least 10 characters and numbers and letters.</div>
-        </div>
-
-        <div class="col-md-6 d-md-block d-none"></div>
-
-        <div class="col-md-6 col-12">
-            <label for="passwordInput2" class="form-label">Repeat password</label>
-            <input value="{{post.passwordInput2}}" required class="form-control" id="passwordInput2" name="passwordInput2" type="password" placeholder="Password">
-        </div>
-        {% endif %}
-
-        <div class="col-md-6">
-            <label for="firstnameInput" class="form-label">Firstname</label>
-            {% if post.errorType == 'firstnameTooLong' %}
-            <input required class="form-control is-invalid" id="firstnameInput" name="firstnameInput" type="text" aria-describedby="firstnameHelp" placeholder="Firstname">
-            <div id="firstnameHelp" class="invalid-feedback">Firstname is too long.</div>
-            {% else %}
-            <input value="{{post.firstnameInput}}" required class="form-control" id="firstnameInput" name="firstnameInput" type="text" placeholder="Firstname">
-            {% endif %}
-        </div>
-        
-        <div class="col-md-6">
-            <label for="lastnameInput" class="form-label">Lastname</label>
-            {% if post.errorType == 'lastnameTooLong' %}
-            <input required class="form-control is-invalid" id="lastnameInput" name="lastnameInput" type="text" aria-describedby="lastnameHelp" placeholder="Lastname">
-            <div id="lastnameHelp" class="invalid-feedback">Lastname is too long.</div>
-            {% else %}
-            <input value="{{post.lastnameInput}}" required class="form-control" id="lastnameInput" name="lastnameInput" type="text" placeholder="Lastname">
-            {% endif %}
-        </div>
-        
-        <div class="col-md-12">
-            <label for="biographyInput" class="form-label">Biography <span class="text-white-50">(optional)</span></label>    
-            {% if post.errorType == 'biographyTooLong' %}
-            <textarea id="biographyInput" name="biographyInput" class="form-control is-invalid" aria-describedby="biographyHelp" placeholder="I'm using TaskSphere!" rows="3"></textarea>
-            <div id="biographyHelp" class="invalid-feedback">Maximum 150 characters.</div>
-            {% else %}   
-            <textarea id="biographyInput" name="biographyInput" class="form-control" aria-describedby="biographyHelp" placeholder="I'm using TaskSphere!" rows="3">{{post.biographyInput}}</textarea>
-            <div id="biographyHelp" class="form-text text-white-50">Maximum 150 characters.</div>
-            {% endif %} 
-        </div>
-
-        <div class="col-md-12 d-flex justify-content-center">
-            <button type="submit" class="btn btn-lg btn-primary border-1 border-white">Submit</button>
-        </div>
+        {{ form.as_p }}
+        <div class="d-flex justify-content-center"><button type="submit" class="btn btn-success btn-lg mt-5">Submit</button></div>
     </form>
 </div>
-<div class="container appearAnimation d-flex align-items-center justify-content-start mb-5 mt-4 mt-md-5">
+<!--<div class="container appearAnimation d-flex align-items-center justify-content-start mb-5 mt-4 mt-md-5">
     <img src="{% static 'icons/arrow-left.svg' %}" alt="Arrow-left">
     <a class="text-white ms-1" href="{% url 'signin' %}">I already have an account</a>
-</div>
+</div> -->
 {% endblock %}
