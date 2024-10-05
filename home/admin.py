@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.utils.html import format_html
 from .models import Group, Table, Table_taskColumn, Table_task
 
 class TableTaskInline(admin.TabularInline):
@@ -18,11 +20,19 @@ class TableInline(admin.TabularInline):
 
     
 class GroupAdmin(admin.ModelAdmin):
-    list_display = ('group_name', 'givenID', 'group_description', 'group_password', 'created_on', 'id')
-    readonly_fields = ('created_on', 'id')
+    list_display = ('group_name', 'givenID', 'group_description', 'group_password', 'created_on', 'id',)
+    readonly_fields = ('created_on', 'get_users', 'id')
     search_fields = ('group_name', 'givenID')
-    filter_horizontal = ('workers',)
     inlines = [TableInline]
+
+
+    def get_users(self, obj):
+        if obj.users.exists():
+            return format_html("<br>".join([user.email for user in obj.users.all()]))
+        return "No users"
+
+    get_users.short_description = 'Users'
+
 
 class TableAdmin(admin.ModelAdmin):
     list_display = ('id', 'group')

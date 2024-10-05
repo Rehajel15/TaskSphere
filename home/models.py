@@ -1,5 +1,6 @@
 # models.py
 from django.db import models
+from django.contrib.auth.hashers import make_password, check_password
 import uuid
 from datetime import datetime
 
@@ -10,7 +11,12 @@ class Group(models.Model):
     group_password = models.CharField(max_length=30)
     group_description = models.CharField(max_length=150)
     created_on = models.DateTimeField(default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'), editable=False)
-    workers = models.ManyToManyField('authentication.CustomUser', related_name='assigned_groups')
+
+    def set_password(self, raw_password):
+        self.password = make_password(raw_password)  # Hashes and sets the password for the group
+
+    def check_password(self, raw_password):
+        return check_password(raw_password, self.password)  # Checks the input of a user
 
     def __str__(self):
         return f"{self.group_name} || {self.givenID}"

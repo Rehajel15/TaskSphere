@@ -4,15 +4,84 @@
 {% block description %}TaskSphere's sign-up page.{% endblock %}
 {% block header %}Sign Up{% endblock %}
 {% block content %}
-<div class="container appearAnimation text-white mt-3 mt-lg-5">
-    <form method="post" action="{% url 'signup' %}">
+<div class="container appearAnimation text-white mt-3 mb-5 mt-lg-5">
+    <form method="post" action="{% url 'signup' %}" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <div class="d-flex justify-content-center"><button type="submit" class="btn btn-success btn-lg mt-5">Submit</button></div>
+
+        <div class="form-group">
+            {{ signUp_form.email.label_tag|linebreaksbr }}
+            {% for error in signUp_form.email.errors %}
+            <br><span class="form-text text-warning fs-6">{{ error }}</span>
+            {% endfor %}
+            {{ signUp_form.email }}
+            {{ signUp_form.email.help_text|safe }}
+        </div>
+
+        <div class="form-group mt-3">
+            {{ signUp_form.password1.label_tag }}
+            {{ signUp_form.password1 }}
+            {{ signUp_form.password1.help_text|safe }}
+            
+        </div>
+        
+        <div class="form-group">
+            {{ signUp_form.password2.label_tag }}
+            {{ signUp_form.password2 }}
+            {{ signUp_form.password2.help_text|safe }}
+            {% if signUp_form.password2.errors %}
+            <div class="form-text text-warning fs-6">
+                {{ signUp_form.password2.errors }}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ signUp_form.firstname.label_tag }}
+                    {% for error in signUp_form.firstname.errors %}
+                    <br><span class="form-text text-warning fs-6">{{ error }}</span>
+                    {% endfor %}
+                    {{ signUp_form.firstname }}
+                    {{ signUp_form.firstname.errors }}
+                </div>
+            </div>
+            <div class="col-md-6 mt-3 mt-md-0">
+                <div class="form-group">
+                    {{ signUp_form.lastname.label_tag }}
+                    {% for error in signUp_form.lastname.errors %}
+                    <br><span class="form-text text-warning fs-6">{{ error }}</span>
+                    {% endfor %}
+                    {{ signUp_form.lastname }}
+                    {{ signUp_form.lastname.errors }}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group mt-3">
+            {{ signUp_form.biography.label_tag }}
+            {% for error in signUp_form.biography.errors %}
+            <br><span class="form-text text-warning fs-6">{{ error }}</span>
+            {% endfor %}
+            {{ signUp_form.biography }}
+            {{ signUp_form.biography.errors }}
+        </div>
+
+        <div class="form-group mt-3">
+            {{ signUp_form.profile_picture.label_tag }}
+            {{ signUp_form.profile_picture }}
+            {% for error in signUp_form.profile_picture.errors %}
+            <br><span class="form-text text-warning fs-6">{{ error }}</span>
+            {% endfor %}
+            {{ signUp_form.profile_picture.help_text|safe }}
+            
+        </div>
+
+        <div class="d-flex justify-content-center"><button type="submit" class="btn border border-white btn-success btn-lg mt-3">Submit</button></div>
     </form>
 </div>
-<!--<div class="container appearAnimation d-flex align-items-center justify-content-start mb-5 mt-4 mt-md-5">
+<div class="container appearAnimation d-flex align-items-center justify-content-start mb-5 mt-4 mt-md-5">
     <img src="{% static 'icons/arrow-left.svg' %}" alt="Arrow-left">
     <a class="text-white ms-1" href="{% url 'signin' %}">I already have an account</a>
-</div> -->
+</div>
 {% endblock %}

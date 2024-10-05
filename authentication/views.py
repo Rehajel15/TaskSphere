@@ -50,16 +50,16 @@ def SignUp(request):
         messages.error(request, "You can't sign up because you already are. To do this please sign out.")
         return redirect('/authentication/')
     
-    form = SignUpForm()
+    signUp_form = SignUpForm()
 
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
+        signUp_form = SignUpForm(request.POST or None, request.FILES or None)
+        if signUp_form.is_valid():
+            signUp_form.save()
             messages.success(request, "Account created successfully.")
             return redirect('/authentication')
     
-    return render(request, 'signup.html', {'form': form})
+    return render(request, 'signup.html', {'signUp_form': signUp_form,})
 
 
 def ChooseGroupAction(request):

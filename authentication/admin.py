@@ -5,17 +5,17 @@ from .models import CustomUser
 class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('firstname', 'lastname', 'biography', 'profile_picture', 'in_group')}),
+        ('Personal info', {'fields': ('firstname', 'lastname', 'biography', 'profile_picture', 'group',)}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'biography', 'profile_picture', 'in_group', 'password1', 'password2'),
+            'fields': ('email', 'biography', 'profile_picture', 'password1', 'password2'),
         }),
     )
-    list_display = ('email', 'is_staff', 'is_superuser', 'in_group')
+    list_display = ('email', 'is_staff', 'is_superuser',)
     search_fields = ('email',)
     ordering = ('email',)
 
