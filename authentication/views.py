@@ -3,6 +3,8 @@ from authentication.models import CustomUser
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .forms import SignUpForm
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 # Create your views here.
@@ -47,8 +49,22 @@ def SignUp(request):
     if request.method == 'POST':
         signUp_form = SignUpForm(request.POST or None, request.FILES or None)
         if signUp_form.is_valid():
+            emailAdress = signUp_form.cleaned_data['email']
+            first_name = signUp_form.cleaned_data['firstname']
+            last_name = signUp_form.cleaned_data['lastname']
+
+
             signUp_form.save()
             messages.success(request, "Account created successfully.")
+
+            send_mail(
+                "Thank you for joining TaskSphere",
+                f"Hello, {first_name} {last_name}. \n We are pleased that you have chosen TaskSphere. If any problems arise over time, please contact our support. We wish you a lot of fun and good luck working with Tasksphere!",
+                settings.EMAIL_HOST_USER,
+                [emailAdress],
+                fail_silently=False,
+            )
+
             return redirect('main')
     
     return render(request, 'signup.html', {'signUp_form': signUp_form,})
@@ -56,7 +72,7 @@ def SignUp(request):
 
 def ChooseGroupAction(request):
     if request.user.is_authenticated:
-        if request.user.in_group is not None:
+        if request.user.group is not None:
             messages.error(request, "You already part of a group. Please leave the group first.")
             return redirect('main')
         else:
@@ -67,7 +83,7 @@ def ChooseGroupAction(request):
 
 def JoinGroup(request):
     if request.user.is_authenticated:
-        if request.user.in_group is not None:
+        if request.user.group is not None:
             messages.error(request, "You already part of a group. Please leave the group first.")
             return redirect('main')
         else:
