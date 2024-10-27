@@ -9,7 +9,7 @@
 </div>
 
 <div class="container appearAnimation mt-3 mt-md-4">
-    <form action="/authentication/signup/joingroup/" method="post" class="text-white">
+    <form action="{% url 'joingroup' %}" method="post" class="text-white">
         {% csrf_token %}
         <div class="mb-3">
             <label for="groupIDInput" class="form-label">Group ID</label>

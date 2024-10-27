@@ -12,32 +12,28 @@
                     <div class="col-12">
                         <span class="fs-4">What do you want to do?</span>
                     </div>
-                    <div class="col-md-4 col-12">
-                        <a class="fs-4 mt-3 text-light" href="changeGroup/">Change the group</a>
+                    <div class="col-12">
+                        <a class="fs-4 mt-3 text-light" href="{% url 'leavegroup' %}">Change or leave the current group</a>
                     </div>
-    
-                    <div class="col-md-4 fs-4 d-none d-md-block">|</div>
-    
-                    <div class="col-md-4 col-12">
-                        <a class="fs-4 mt-3 text-light" href="leaveGroup/">Leave the group</a>
+                    <div class="col-12">
+                        <span class="fs-4 font-monospace">---------------</span>
                     </div>
-    
-                    <div class="col-md-4 col-12">
-                        <a class="fs-4 mt-3 text-light" href="deleteAcc/">Delete your account</a>
+                    <div class="col-12">
+                        <a class="fs-4 mt-3 text-light" href="{% url 'deleteaccount' %}">Delete your account</a>
                     </div>
-    
-                    <div class="col-md-4 fs-4 col-12 d-none d-md-block">|</div>
-    
-                    <div class="col-md-4 col-12">
-                        <a class="fs-4 mt-3 text-light" href="signout/">Sign Out</a>
+                    <div class="col-12">
+                        <span class="fs-4 font-monospace">---------------</span>
+                    </div>
+                    <div class="col-12">
+                        <a class="fs-4 mt-3 text-light" href="{% url 'signout' %}">Sign Out</a>
                     </div>
                 </div>
             </div>
             {% else %}
             <span class="fs-4">What do you want to do?</span>
-            <a class="fs-4 mt-3 text-light fw-bold" href="signin/">Sign In</a>
+            <a class="fs-4 mt-3 text-light fw-bold" href="{% url 'signin' %}">Sign In</a>
             <span class="fs-4 mt-3">or</span>
-            <a class="fs-4 mt-3 text-light fw-bold" href="signup/">Sign Up</a>
+            <a class="fs-4 mt-3 text-light fw-bold" href="{% url 'signup' %}">Sign Up</a>
             {% endif %}
         </div>
     </div>

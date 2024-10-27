@@ -81,7 +81,7 @@ def ChooseGroupAction(request):
         messages.error(request, "To have access to this page you need to sign in.")
         return redirect('signin')
 
-def JoinGroup(request):
+def CreateGroup(request):
     if request.user.is_authenticated:
         if request.user.group is not None:
             messages.error(request, "You already part of a group. Please leave the group first.")
@@ -91,6 +91,32 @@ def JoinGroup(request):
     else:
         messages.error(request, "To have access to this page you need to sign in.")
         return redirect('signin')
+
+def JoinGroup(request):
+    if request.user.is_authenticated:
+        if request.user.group is not None:
+            messages.error(request, "You already are part of a group. Please leave the group first.")
+            return redirect('main')
+        else:
+            return render(request, 'joingroup.html')
+    else:
+        messages.error(request, "To have access to this page you need to sign in.")
+        return redirect('signin')
+    
+def LeaveGroup(request):
+    if request.user.is_authenticated:
+        if request.user.group is None:
+            messages.error(request, "You are not part of a group.")
+            return redirect('main')
+        else:
+            request.user.group.delete()
+            return redirect('choosegroupaction')
+    else:
+        messages.error(request, "To have access to this page you need to sign in.")
+        return redirect('signin')
+
+def DeleteAccount(request):
+    return 0
 
 def SignOut(request):
     logout(request)

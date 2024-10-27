@@ -5,7 +5,7 @@
 {% block header %}Sign In{% endblock %}
 {% block content %}
 <div class="container appearAnimation mt-sm-5 mt-4">
-    <form action="/authentication/signin/" method="post" class="text-white">
+    <form action="{% url 'signin' %}" method="post" class="text-white">
         {% csrf_token %}
         <div class="mb-3">
           <label for="emailInput" class="form-label">Email address</label>
