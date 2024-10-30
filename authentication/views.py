@@ -87,7 +87,7 @@ def CreateGroup(request):
             messages.error(request, "You already part of a group. Please leave the group first.")
             return redirect('main')
         else:
-            return render(request, 'joingroup.html')
+            return render(request, 'createGroup.html')
     else:
         messages.error(request, "To have access to this page you need to sign in.")
         return redirect('signin')
@@ -109,7 +109,12 @@ def LeaveGroup(request):
             messages.error(request, "You are not part of a group.")
             return redirect('main')
         else:
-            request.user.group.delete()
+            user_group = request.user.group.group_name
+
+            request.user.group = None
+            request.user.save()
+            messages.success(request, f'You left the group "{user_group}" successfully.')
+
             return redirect('choosegroupaction')
     else:
         messages.error(request, "To have access to this page you need to sign in.")
