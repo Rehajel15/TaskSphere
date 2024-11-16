@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from authentication.models import CustomUser
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .forms import SignUpForm
+from .forms import SignUpForm, CreateGroupForm
 from django.core.mail import send_mail
 from django.conf import settings
 
@@ -87,7 +87,8 @@ def CreateGroup(request):
             messages.error(request, "You already part of a group. Please leave the group first.")
             return redirect('main')
         else:
-            return render(request, 'createGroup.html')
+            createGroup_form = CreateGroupForm
+            return render(request, 'createGroup.html', {'createGroup_form': createGroup_form,})
     else:
         messages.error(request, "To have access to this page you need to sign in.")
         return redirect('signin')

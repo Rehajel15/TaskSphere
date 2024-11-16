@@ -2,7 +2,13 @@ from typing import Any
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from authentication.models import CustomUser
-from home.models import Group
+from home.models import Group, GroupGivenIDEnding
+
+def getGroupGivenIDEndings():
+    endings = []
+    for entry in GroupGivenIDEnding.objects.all():
+        endings.append(entry.ending)
+    return endings
 
 class SignUpForm(UserCreationForm):
     firstname = forms.CharField(
@@ -69,5 +75,54 @@ class SignUpForm(UserCreationForm):
         self.fields['password2'].widget.attrs['placeholder'] = 'Confirm Password'
         self.fields['password2'].label = ''
         self.fields['password2'].help_text = '<span class="form-text text-white-50">Enter the same password as before, for verification.</span>'
+
+class CreateGroupForm(forms.ModelForm):
+    group_name = forms.CharField(
+        label="Groupname", 
+        max_length=30, 
+        required=True, 
+        widget=forms.TextInput(attrs={
+            'class': 'form-control col-md-6', 
+            'placeholder': 'Groupname',
+        }),
+    )
+
+    givenID = forms.CharField(
+        label="ID", 
+        max_length=40, 
+        required=True, 
+        widget=forms.TextInput(attrs={
+            'class': 'form-control col-md-6', 
+            'placeholder': 'Example: #45F31qwr4lsc',
+        }),
+        help_text='<span class="form-text text-white-50">Every group needs an ID. An ID is required so that people can join your group. It is private and only you can see it.</span>'
+    )
+
+    givenID_ending = forms.ChoiceField(
+        choices=getGroupGivenIDEndings()
+    )
+
+    group_password = forms.CharField(
+        label="Group password",
+        required=True,
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control col-md-6',
+        })
+    )
+
+    group_biography = forms.CharField(
+        label="Group biography",
+        max_length=250,
+        required=False, 
+        widget=forms.Textarea(attrs={
+            'class': 'form-control', 
+            'placeholder': 'We stick together!!', 
+            'rows': '4',
+        }),
+    )
+
+    class Meta:
+        model = Group
+        exclude = ("id", "created_on")
     
 	

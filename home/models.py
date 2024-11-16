@@ -18,7 +18,7 @@ class Group(models.Model):
     givenID = models.CharField(max_length=40)  # ID that can be changed
     givenID_ending = models.ForeignKey(GroupGivenIDEnding, related_name='Groups', on_delete=models.DO_NOTHING)
     group_password = models.CharField(max_length=30)
-    group_description = models.CharField(max_length=150)
+    group_biography = models.TextField(null=True, blank=True)
     created_on = models.DateTimeField(default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'), editable=False)
 
     def set_password(self, raw_password):

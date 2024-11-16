@@ -20,7 +20,7 @@ class TableInline(admin.TabularInline):
 
     
 class GroupAdmin(admin.ModelAdmin):
-    list_display = ('group_name', 'givenID', 'group_description', 'group_password', 'created_on', 'id',)
+    list_display = ('group_name', 'givenID', 'group_biography', 'group_password', 'created_on', 'id',)
     readonly_fields = ('created_on', 'get_users', 'id')
     search_fields = ('group_name', 'givenID')
     inlines = [TableInline]
