@@ -4,10 +4,19 @@ from django.contrib.auth.hashers import make_password, check_password
 import uuid
 from datetime import datetime
 
+class GroupGivenIDEnding(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    ending = models.CharField(max_length=10)
+    whole_name = models.CharField(max_length=40)
+
+    def __str__(self):
+        return str(f".{self.ending}")
+
 class Group(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    givenID = models.CharField(max_length=40)  # ID that can be changed
     group_name = models.CharField(max_length=30)
+    givenID = models.CharField(max_length=40)  # ID that can be changed
+    givenID_ending = models.ForeignKey(GroupGivenIDEnding, related_name='Groups', on_delete=models.DO_NOTHING)
     group_password = models.CharField(max_length=30)
     group_description = models.CharField(max_length=150)
     created_on = models.DateTimeField(default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'), editable=False)
@@ -21,12 +30,14 @@ class Group(models.Model):
     def __str__(self):
         return f"{self.group_name} || {self.givenID}"
     
+    
 class Table(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     group = models.OneToOneField(Group, null=True, on_delete=models.CASCADE, editable=False) # Connect to Group
     
     def __str__(self):
         return str(self.id)
+        
 
 class Table_taskColumn(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

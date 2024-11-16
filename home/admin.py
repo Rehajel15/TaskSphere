@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.html import format_html
-from .models import Group, Table, Table_taskColumn, Table_task
+from .models import GroupGivenIDEnding, Group, Table, Table_taskColumn, Table_task
 
 class TableTaskInline(admin.TabularInline):
     model = Table_task
@@ -46,3 +46,4 @@ class TableAdmin(admin.ModelAdmin):
 
 admin.site.register(Group, GroupAdmin)
 admin.site.register(Table, TableAdmin)
+admin.site.register(GroupGivenIDEnding)
