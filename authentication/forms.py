@@ -5,9 +5,9 @@ from authentication.models import CustomUser
 from home.models import Group, GroupGivenIDEnding
 
 def getGroupGivenIDEndings():
-    endings = []
+    endings = {}
     for entry in GroupGivenIDEnding.objects.all():
-        endings.append(entry.ending)
+        endings.update({"." + entry.ending: "." + entry.ending})
     return endings
 
 class SignUpForm(UserCreationForm):
@@ -82,7 +82,7 @@ class CreateGroupForm(forms.ModelForm):
         max_length=30, 
         required=True, 
         widget=forms.TextInput(attrs={
-            'class': 'form-control col-md-6', 
+            'class': 'form-control', 
             'placeholder': 'Groupname',
         }),
     )
@@ -92,21 +92,26 @@ class CreateGroupForm(forms.ModelForm):
         max_length=40, 
         required=True, 
         widget=forms.TextInput(attrs={
-            'class': 'form-control col-md-6', 
+            'class': 'form-control', 
+            'type': 'text',
             'placeholder': 'Example: #45F31qwr4lsc',
         }),
         help_text='<span class="form-text text-white-50">Every group needs an ID. An ID is required so that people can join your group. It is private and only you can see it.</span>'
     )
 
     givenID_ending = forms.ChoiceField(
-        choices=getGroupGivenIDEndings()
+        choices=getGroupGivenIDEndings(),
+        widget=forms.Select( attrs= {
+            'class': 'form-select bg-secondary text-white'
+        })
     )
 
     group_password = forms.CharField(
         label="Group password",
         required=True,
+        
         widget=forms.PasswordInput(attrs={
-            'class': 'form-control col-md-6',
+            'class': 'form-control',
         })
     )
 

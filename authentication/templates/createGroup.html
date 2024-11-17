@@ -7,9 +7,46 @@
 <div class="container appearAnimation d-flex justify-content-center fs-6 mt-2 mt-md-4">
     <h4 class="text-white">Create a new group</h4>
 </div>
-<div class="container mt-3 mt-md-5 d-flex justify-content-center appearAnimation">
+<div class="container text-white mt-3 mt-md-5 d-flex justify-content-center appearAnimation">
     <form method="post" action="{% url 'creategroup' %}">
-        {{createGroup_form.as_p}}
+
+        <div class="form-group">
+            {{ createGroup_form.group_name.label_tag|linebreaksbr }}
+            {% for error in createGroup_form.group_name.errors %}
+            <br><span class="form-text text-warning fs-6">{{ error }}</span>
+            {% endfor %}
+            {{ createGroup_form.group_name }}
+        </div>
+
+        
+        <div class="form-group mt-3">
+            {{ createGroup_form.givenID.label_tag|linebreaksbr }}
+            {% for error in createGroup_form.group_name.errors %}
+            <br><span class="form-text text-warning fs-6">{{ error }}</span>
+            {% endfor %}
+            <div class="input-group">
+                {{ createGroup_form.givenID }}
+                {{ createGroup_form.givenID_ending }}
+            </div>
+            {{ createGroup_form.givenID.help_text|safe }}
+        </div>
+
+        <div class="form-group mt-3">
+            {{ createGroup_form.group_password.label_tag|linebreaksbr }}
+            {% for error in createGroup_form.group_password.errors %}
+            <br><span class="form-text text-warning fs-6">{{ error }}</span>
+            {% endfor %}
+            {{ createGroup_form.group_password }}
+        </div>
+
+        <div class="form-group mt-3">
+            {{ createGroup_form.group_biography.label_tag|linebreaksbr }}
+            {% for error in createGroup_form.group_biography.errors %}
+            <br><span class="form-text text-warning fs-6">{{ error }}</span>
+            {% endfor %}
+            {{ createGroup_form.group_biography }}
+        </div>
+        
     </form>
 </div>
 {% endblock %}
