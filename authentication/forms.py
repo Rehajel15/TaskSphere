@@ -92,7 +92,7 @@ class CreateGroupForm(forms.ModelForm):
         max_length=40, 
         required=True, 
         widget=forms.TextInput(attrs={
-            'class': 'form-control', 
+            'class': 'form-control w-75', 
             'type': 'text',
             'placeholder': 'Example: #45F31qwr4lsc',
         }),
@@ -109,7 +109,6 @@ class CreateGroupForm(forms.ModelForm):
     group_password = forms.CharField(
         label="Group password",
         required=True,
-        
         widget=forms.PasswordInput(attrs={
             'class': 'form-control',
         })
