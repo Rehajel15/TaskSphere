@@ -7,7 +7,7 @@ function ElectronMainMethod() {
         show: false // Fenster zunächst nicht anzeigen
     });
 
-    const appURL = 'http://localhost:8000';
+    const appURL = 'http://localhost:8000/authentication';
     launchWindow.loadURL(appURL);
 
     // Zeige das Fenster, sobald die Seite geladen ist
