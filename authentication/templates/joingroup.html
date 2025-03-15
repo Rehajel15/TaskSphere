@@ -17,9 +17,9 @@
                 <input required name="groupIDInput" id="groupIDInput" type="text" class="form-control w-75" aria-describedby="groupIDHelp" aria-label="ID of the group">
                 <select required class="form-select bg-secondary text-white" name="groupIDEndingInput" id="groupIDEndingInput">
                     <option selected value="">?</option>
-                    <option value=".de">.de</option>
-                    <option value=".com">.com</option>
-                    <option value=".org">.org</option>
+                    {% for item in groupIDEnding %}
+                    <option value="{{item}}">{{item}}</option>
+                    {% endfor %}
                 </select>
             </div>
             <div id="groupIDHelp" class="form-text text-white-50">Replace question mark with the ending of the group ID.</div>

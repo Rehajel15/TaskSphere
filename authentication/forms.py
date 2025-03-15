@@ -1,7 +1,7 @@
 from typing import Any
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from authentication.models import CustomUser
+from authentication.models import User
 from home.models import Group, GroupGivenIDEnding
 
 def getGroupGivenIDEndings():
@@ -51,7 +51,7 @@ class SignUpForm(UserCreationForm):
     )
 
     class Meta:
-        model = CustomUser
+        model = User
         fields = ('email', 'password1', 'password2', 'firstname', 'lastname', 'biography', 'profile_picture',)
 
     def __init__(self, *args, **kwargs):

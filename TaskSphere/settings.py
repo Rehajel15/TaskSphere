@@ -94,7 +94,7 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = 'authentication.CustomUser'
+AUTH_USER_MODEL = 'authentication.User'
 
 
 # Password validation
