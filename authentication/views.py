@@ -57,13 +57,13 @@ def SignUp(request):
             signUp_form.save()
             messages.success(request, "Account created successfully.")
 
-            send_mail(
-                "Thank you for joining TaskSphere",
-                f"Hello, {first_name} {last_name}. \n We are pleased that you have chosen TaskSphere. If any problems arise over time, please contact our support. We wish you a lot of fun and good luck working with Tasksphere!",
-                settings.EMAIL_HOST_USER,
-                [emailAdress],
-                fail_silently=False,
-            )
+            #send_mail(
+                #"Thank you for joining TaskSphere",
+                #f"Hello, {first_name} {last_name}. \n We are pleased that you have chosen TaskSphere. If any problems arise over time, please contact our support. We wish you a lot of fun and good luck working with Tasksphere!",
+                #settings.EMAIL_HOST_USER,
+                #[emailAdress],
+                #fail_silently=False,
+            #)
 
             return redirect('main')
     
@@ -84,7 +84,7 @@ def ChooseGroupAction(request):
 def CreateGroup(request):
     if request.user.is_authenticated:
         if request.user.group is not None:
-            messages.error(request, "You already part of a group. Please leave the group first.")
+            messages.error(request, "You are already part of a group. Please leave the group first.")
             return redirect('main')
         else:
             createGroup_form = CreateGroupForm

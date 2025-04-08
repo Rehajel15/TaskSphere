@@ -1,6 +1,9 @@
 from typing import Any
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ValidationError
+from PIL import Image
+from django.core.validators import FileExtensionValidator
 from authentication.models import User
 from home.models import Group, GroupGivenIDEnding
 
@@ -43,12 +46,26 @@ class SignUpForm(UserCreationForm):
         }),
     )
 
+
+    def validate_image_file_size(image):
+        max_size = 2 * 1024 * 1024  # 2 MB
+        if image.size > max_size:
+            raise ValidationError("The image may be a maximum of 2MB in size.")
+    
     profile_picture = forms.ImageField(
         max_length=30,
         label="Profile picture",
-        help_text = '<br> <span class="form-text text-white-50">Allowed file formats: .png and .jpg</span>',
+        help_text='<br> <span class="form-text text-white-50">Max size: 2 MB. Allowed formats: .png and .jpg</span>',
         required=False,
+        validators=[
+            FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png']),
+            validate_image_file_size
+        ],
+        widget=forms.ClearableFileInput(attrs={
+            'accept': '.jpg, .jpeg, .png',
+        })
     )
+
 
     class Meta:
         model = User
@@ -120,7 +137,7 @@ class CreateGroupForm(forms.ModelForm):
         required=False, 
         widget=forms.Textarea(attrs={
             'class': 'form-control', 
-            'placeholder': 'We stick together!!', 
+            'placeholder': 'We stick together!', 
             'rows': '4',
         }),
     )
