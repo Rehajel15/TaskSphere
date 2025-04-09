@@ -10,7 +10,7 @@ from home.models import Group, GroupGivenIDEnding
 def getGroupGivenIDEndings():
     endings = {}
     for entry in GroupGivenIDEnding.objects.all():
-        endings.update({"." + entry.ending: "." + entry.ending})
+        endings.update({entry.ending: entry.ending})
     return endings
 
 class SignUpForm(UserCreationForm):
@@ -100,14 +100,15 @@ class CreateGroupForm(forms.ModelForm):
         required=True, 
         widget=forms.TextInput(attrs={
             'class': 'form-control', 
-            'placeholder': 'Groupname',
+            'placeholder': 'For example name of the company',
         }),
     )
 
     givenID = forms.CharField(
         label="ID", 
         max_length=40, 
-        required=True, 
+        required=True,
+
         widget=forms.TextInput(attrs={
             'class': 'form-control w-75', 
             'type': 'text',
@@ -118,10 +119,16 @@ class CreateGroupForm(forms.ModelForm):
 
     givenID_ending = forms.ChoiceField(
         choices=getGroupGivenIDEndings(),
-        widget=forms.Select( attrs= {
+        widget=forms.Select(attrs={
             'class': 'form-select bg-secondary text-white'
         })
     )
+
+    def clean_givenID_ending(self):
+        ending = self.cleaned_data['givenID_ending']
+        cleaned_ending = ending.replace("'", "")  
+        return cleaned_ending
+
 
     group_password = forms.CharField(
         label="Group password",
@@ -145,5 +152,15 @@ class CreateGroupForm(forms.ModelForm):
     class Meta:
         model = Group
         exclude = ("id", "created_on")
+    
+    def clean_group_id(self):
+        group_id = self.cleaned_data['group_id']
+        qs = Group.objects.filter(group_id=group_id)
+        if self.instance.pk:
+            qs = qs.exclude(pk=self.instance.pk)
+        if qs.exists():
+            raise forms.ValidationError("Diese Gruppen-ID ist bereits vergeben.")
+        return group_id
+
     
 	

@@ -9,7 +9,7 @@
 </div>
 <div class="container text-white mt-3 mt-md-5 mb-4 d-flex justify-content-center appearAnimation">
     <form method="post" action="{% url 'creategroup' %}">
-
+        {% csrf_token %}
         <div class="form-group">
             {{ createGroup_form.group_name.label_tag|linebreaksbr }}
             {% for error in createGroup_form.group_name.errors %}

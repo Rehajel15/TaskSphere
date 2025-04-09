@@ -10,12 +10,12 @@ class GroupGivenIDEnding(models.Model):
     whole_name = models.CharField(max_length=40)
 
     def __str__(self):
-        return str(f".{self.ending}")
+        return str(f"{self.ending}")
 
 class Group(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     group_name = models.CharField(max_length=30)
-    givenID = models.CharField(max_length=40)  # ID that can be changed
+    givenID = models.CharField(max_length=40, unique=True)  # ID that can be changed
     givenID_ending = models.ForeignKey(GroupGivenIDEnding, related_name='Groups', on_delete=models.DO_NOTHING)
     group_password = models.CharField(max_length=30)
     group_biography = models.TextField(null=True, blank=True)

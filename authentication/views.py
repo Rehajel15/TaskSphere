@@ -55,7 +55,7 @@ def SignUp(request):
 
 
             signUp_form.save()
-            messages.success(request, "Account created successfully.")
+            messages.success(request, "Account successfully created.")
 
             #send_mail(
                 #"Thank you for joining TaskSphere",
@@ -76,7 +76,7 @@ def ChooseGroupAction(request):
             messages.error(request, "You already part of a group. Please leave the group first.")
             return redirect('main')
         else:
-            return render(request, 'chooseGroupAction.html')
+            return render(request, 'chooseGroupAction.html', {'username':request.user.firstname})
     else:
         messages.error(request, "To have access to this page you need to sign in.")
         return redirect('signin')
@@ -85,9 +85,17 @@ def CreateGroup(request):
     if request.user.is_authenticated:
         if request.user.group is not None:
             messages.error(request, "You are already part of a group. Please leave the group first.")
-            return redirect('main')
         else:
-            createGroup_form = CreateGroupForm
+            createGroup_form = CreateGroupForm()
+            if request.method == 'POST':
+                createGroup_form = CreateGroupForm(request.POST or None)
+                if createGroup_form.is_valid():
+                    givenID = createGroup_form.cleaned_data['givenID']
+                    print(givenID)
+                    createGroup_form.save()
+                    request.user.group = givenID
+                    messages.success(request, "Group successfully created.")
+                    return redirect('main')
             return render(request, 'createGroup.html', {'createGroup_form': createGroup_form,})
     else:
         messages.error(request, "To have access to this page you need to sign in.")
@@ -111,7 +119,6 @@ def LeaveGroup(request):
             return redirect('main')
         else:
             user_group = request.user.group.group_name
-
             request.user.group = None
             request.user.save()
             messages.success(request, f'You left the group "{user_group}" successfully.')
