@@ -33,7 +33,7 @@ def SignIn(request):
             else:
                 login(request, user)
                 if user.group is None:  # in_group is empty
-                    return redirect('/authentication/signup/choosegroupaction')
+                    return redirect('choosegroupaction')
                 else:
                     return redirect('home')
                 
@@ -44,28 +44,26 @@ def SignUp(request):
         messages.error(request, "You can't sign up because you already are. To do this please sign out.")
         return redirect('main')
     
-    signUp_form = SignUpForm()
+    signUp_form = SignUpForm(request.POST or None, request.FILES or None)
 
-    if request.method == 'POST':
-        signUp_form = SignUpForm(request.POST or None, request.FILES or None)
-        if signUp_form.is_valid():
-            emailAdress = signUp_form.cleaned_data['email']
-            first_name = signUp_form.cleaned_data['firstname']
-            last_name = signUp_form.cleaned_data['lastname']
+    if request.method == 'POST' and signUp_form.is_valid():
+        # emailAdress = signUp_form.cleaned_data['email']
+        # first_name = signUp_form.cleaned_data['firstname']
+        # last_name = signUp_form.cleaned_data['lastname']
 
 
-            signUp_form.save()
-            messages.success(request, "Account successfully created.")
+        signUp_form.save()
+        messages.success(request, "Account successfully created.")
 
-            #send_mail(
-                #"Thank you for joining TaskSphere",
-                #f"Hello, {first_name} {last_name}. \n We are pleased that you have chosen TaskSphere. If any problems arise over time, please contact our support. We wish you a lot of fun and good luck working with Tasksphere!",
-                #settings.EMAIL_HOST_USER,
-                #[emailAdress],
-                #fail_silently=False,
-            #)
+        #send_mail(
+            #"Thank you for joining TaskSphere",
+            #f"Hello, {first_name} {last_name}. \n We are pleased that you have chosen TaskSphere. If any problems arise over time, please contact our support. We wish you a lot of fun and good luck working with Tasksphere!",
+            #settings.EMAIL_HOST_USER,
+            #[emailAdress],
+            #fail_silently=False,
+        #)
 
-            return redirect('main')
+        return redirect('signin')
     
     return render(request, 'signup.html', {'signUp_form': signUp_form,})
 
@@ -73,7 +71,7 @@ def SignUp(request):
 def ChooseGroupAction(request):
     if request.user.is_authenticated:
         if request.user.group is not None:
-            messages.error(request, "You already part of a group. Please leave the group first.")
+            messages.error(request, "You are already part of a group. Please leave the group first.")
             return redirect('main')
         else:
             return render(request, 'chooseGroupAction.html', {'username':request.user.firstname})
@@ -86,16 +84,13 @@ def CreateGroup(request):
         if request.user.group is not None:
             messages.error(request, "You are already part of a group. Please leave the group first.")
         else:
-            createGroup_form = CreateGroupForm()
-            if request.method == 'POST':
-                createGroup_form = CreateGroupForm(request.POST or None)
-                if createGroup_form.is_valid():
-                    givenID = createGroup_form.cleaned_data['givenID']
-                    print(givenID)
-                    createGroup_form.save()
-                    request.user.group = givenID
-                    messages.success(request, "Group successfully created.")
-                    return redirect('main')
+            createGroup_form = CreateGroupForm(request.POST or None)
+            if request.method == 'POST' and createGroup_form.is_valid():
+                givenID = createGroup_form.cleaned_data['givenID']
+                createGroup_form.save()
+                request.user.group = givenID
+                messages.success(request, "Group successfully created.")
+                return redirect('main')
             return render(request, 'createGroup.html', {'createGroup_form': createGroup_form,})
     else:
         messages.error(request, "To have access to this page you need to sign in.")

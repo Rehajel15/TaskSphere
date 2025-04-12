@@ -2,7 +2,6 @@ from typing import Any
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
-from PIL import Image
 from django.core.validators import FileExtensionValidator
 from authentication.models import User
 from home.models import Group, GroupGivenIDEnding
