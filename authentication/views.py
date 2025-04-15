@@ -124,7 +124,25 @@ def LeaveGroup(request):
         return redirect('signin')
 
 def DeleteAccount(request):
-    return 0
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            passwordPOST = request.POST['passwordPOST']
+            user = authenticate(request, email=request.user.email, password=passwordPOST)
+
+            if user is not None:
+                if request.user.group is not None:
+                    request.user.group == None
+                User.objects.get(email = request.user.email).delete()
+                # -----------------Send user email to confirm the deletion of the account--------------------------
+                messages.success(request, "Deleted your account successfully. We hope to see you again soon!")
+                return redirect("main")
+            else:
+                messages.error(request, "You have entered the wrong password.")
+                return redirect('deleteaccount')
+        return render(request, 'deleteAccount.html')
+    else:
+        messages.error(request, "To have access to this page you need to sign in.")
+        return redirect('signin')
 
 def SignOut(request):
     logout(request)
