@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from authentication.models import User
+from django.shortcuts import render, redirect, get_object_or_404
+from authentication.models import User, Group
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .forms import SignUpForm, CreateGroupForm, getGroupGivenIDEndings
@@ -83,12 +83,15 @@ def CreateGroup(request):
     if request.user.is_authenticated:
         if request.user.group is not None:
             messages.error(request, "You are already part of a group. Please leave the group first.")
+            return redirect('main')
         else:
             createGroup_form = CreateGroupForm(request.POST or None)
             if request.method == 'POST' and createGroup_form.is_valid():
                 givenID = createGroup_form.cleaned_data['givenID']
                 createGroup_form.save()
-                request.user.group = givenID
+                group = Group.objects.get(givenID=givenID)
+                request.user.group = group
+                request.user.save()
                 messages.success(request, "Group successfully created.")
                 return redirect('main')
             return render(request, 'createGroup.html', {'createGroup_form': createGroup_form,})

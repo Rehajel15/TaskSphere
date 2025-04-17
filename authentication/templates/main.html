@@ -4,7 +4,7 @@
 {% block header %}Authentication{% endblock %}
 {% block content %}
 <div class="appearAnimation d-flex justify-content-center mt-5 px-3">
-    <div class="card text-bg-primary mb-3 border-1 border-white mt-sm-5 px-3">
+    <div class="card text-white bg-transparent mb-3 border-1 border-white mt-sm-5 px-3">
         <div class="card-body d-flex flex-column align-items-center justify-content-center">
             <!--------------------Change template (if user not in group -> he can't leave or change group)----------------->
             {% if user.is_authenticated %}

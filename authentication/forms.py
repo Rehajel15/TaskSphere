@@ -116,18 +116,37 @@ class CreateGroupForm(forms.ModelForm):
         help_text='<span class="form-text text-white-50">Every group needs an ID. An ID is required so that people can join your group. It is private and only you can see it.</span>'
     )
 
+
     givenID_ending = forms.ChoiceField(
         choices=getGroupGivenIDEndings(),
         widget=forms.Select(attrs={
             'class': 'form-select bg-secondary text-white'
-        })
+        }),
     )
 
-    def clean_givenID_ending(self):
-        ending = self.cleaned_data['givenID_ending']
-        cleaned_ending = ending.replace("'", "")  
-        return cleaned_ending
 
+    def clean(self):
+        cleaned_data = super().clean()
+
+        givenID = cleaned_data.get('givenID')
+        givenID_ending = cleaned_data.get('givenID_ending')
+
+        if givenID and givenID_ending:
+            full_givenID = f"{givenID}{givenID_ending}"  
+
+            cleaned_data['givenID'] = full_givenID
+
+        return cleaned_data
+
+    def clean_group_id(self):
+        group_id = self.cleaned_data['givenID']
+        qs = Group.objects.filter(givenID=group_id)
+        if self.instance.pk:
+            qs = qs.exclude(pk=self.instance.pk)
+        if qs.exists():
+            raise forms.ValidationError("This group ID is already taken.")
+        return group_id
+        
 
     group_password = forms.CharField(
         label="Group password",
@@ -152,14 +171,6 @@ class CreateGroupForm(forms.ModelForm):
         model = Group
         exclude = ("id", "created_on")
     
-    def clean_group_id(self):
-        group_id = self.cleaned_data['group_id']
-        qs = Group.objects.filter(group_id=group_id)
-        if self.instance.pk:
-            qs = qs.exclude(pk=self.instance.pk)
-        if qs.exists():
-            raise forms.ValidationError("Diese Gruppen-ID ist bereits vergeben.")
-        return group_id
 
     
 	
