@@ -136,7 +136,7 @@ def DeleteAccount(request):
                 if request.user.group is not None:
                     request.user.group == None
                 logout(request)
-                User.objects.get(email = request.user.email).delete()
+                User.objects.get(email = user.email).delete()
                 # -----------------Send user email to confirm the deletion of the account--------------------------
                 messages.success(request, "Deleted your account successfully. We hope to see you again soon!")
                 return redirect("main")
