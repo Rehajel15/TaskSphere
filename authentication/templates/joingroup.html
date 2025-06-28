@@ -14,11 +14,17 @@
         <div class="mb-3">
             <label for="groupIDInput" class="form-label">Group ID</label>
             <div class="input-group">
-                <input required name="groupIDInput" id="groupIDInput" type="text" class="form-control w-75" aria-describedby="groupIDHelp" aria-label="ID of the group">
+                <input value="{{group_id}}" required name="groupIDInput" id="groupIDInput" type="text" class="form-control w-75" aria-describedby="groupIDHelp" aria-label="ID of the group">
                 <select required class="form-select bg-secondary text-white" name="groupIDEndingInput" id="groupIDEndingInput">
+                    {% if not selected_value%}
                     <option selected value="">?</option>
+                    {% endif %}
                     {% for item in groupIDEnding %}
-                    <option value="{{item}}">{{item}}</option>
+                        {% if item == selected_value %}
+                        <option selected value="{{item}}">{{item}}</option>
+                        {% else %}
+                        <option value="{{item}}">{{item}}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>

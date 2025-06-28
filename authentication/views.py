@@ -33,7 +33,7 @@ def SignIn(request):
             else:
                 login(request, user)
                 if user.group is None:  # in_group is empty
-                    return redirect('choosegroupaction')
+                    return redirect('main')
                 else:
                     return redirect('home')
                 
@@ -105,6 +105,22 @@ def JoinGroup(request):
             messages.error(request, "You already are part of a group. Please leave the group first.")
             return redirect('main')
         else:
+            if request.method == 'POST':
+                group_id = request.POST['groupIDInput'] + request.POST['groupIDEndingInput']
+                group_password = request.POST['groupPasswordInput']
+
+                group_exists = Group.objects.filter(givenID=group_id).exists()
+                
+                if not group_exists or not Group.objects.get(givenID=group_id).group_password == group_password:
+                    messages.error(request, "You entered the wrong group id or password") 
+                    return render(request, 'joingroup.html', {'groupIDEnding': getGroupGivenIDEndings(), 'selected_value': request.POST['groupIDEndingInput'], 'group_id': request.POST['groupIDInput']})
+                else:
+                    group = Group.objects.get(givenID=group_id)
+                    request.user.group = group
+                    request.user.save()
+                    messages.success(request, f"You entered the group {group.group_name}.")
+                    return redirect('main')
+                    
             return render(request, 'joingroup.html', {'groupIDEnding': getGroupGivenIDEndings()})
     else:
         messages.error(request, "To have access to this page you need to sign in.")
@@ -121,7 +137,7 @@ def LeaveGroup(request):
             request.user.save()
             messages.success(request, f'You left the group "{user_group}" successfully.')
 
-            return redirect('choosegroupaction')
+            return redirect('main')
     else:
         messages.error(request, "To have access to this page you need to sign in.")
         return redirect('signin')

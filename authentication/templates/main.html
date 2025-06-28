@@ -13,9 +13,15 @@
                     <div class="col-12">
                         <span class="fs-4">What do you want to do?</span>
                     </div>
+                    {% if not user.group == None %}
                     <div class="col-12">
-                        <a class="fs-4 mt-3 text-light" href="{% url 'leavegroup' %}">Change or leave the current group</a>
+                        <a class="fs-4 mt-3 text-light" href="{% url 'leavegroup' %}">Leave the current group</a>
                     </div>
+                    {% else %}
+                    <div class="col-12">
+                        <a class="fs-4 mt-3 text-light" href="{% url 'choosegroupaction' %}">Join or create a group</a>
+                    </div>
+                    {% endif %}
                     <div class="col-12">
                         <span class="fs-4 font-monospace">---------------</span>
                     </div>
