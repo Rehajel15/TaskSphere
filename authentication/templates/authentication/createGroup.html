@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'authentication/base.html' %}
 {% load static %}
 {% block title %}Create a new group{% endblock %}
 {% block description %}Create a new group on TaskSphere{% endblock %}
@@ -8,7 +8,7 @@
     <h4 class="text-white">Create a new group</h4>
 </div>
 <div class="container text-white mt-3 mt-md-5 mb-4 d-flex justify-content-center appearAnimation">
-    <form method="post" action="{% url 'creategroup' %}">
+    <form method="post" action="{% url 'authentication:creategroup' %}">
         {% csrf_token %}
         <div class="form-group">
             {{ createGroup_form.group_name.label_tag|linebreaksbr }}

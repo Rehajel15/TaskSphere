@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>{% block title %}Base{% endblock %}</title>
+        <meta name="description" content="{% block description %}Base file for the authentication pages.{% endblock %}">
+        <meta name="theme-color" content="#121212">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'bootstrap/bootstrap-5.3.3-dist/css/bootstrap.min.css' %}">
+        <script src="{% static 'bootstrap/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js' %}"></script>
+
+
+        <style>
+            @font-face {
+                font-family: 'Roboto';
+                src: url('/static/font-families/Roboto/Roboto-Regular.ttf') format('truetype');
+            }
+
+            @font-face {
+                font-family: 'Roboto-Bold';
+                src: url('/static/font-families/Roboto/Roboto-Bold.ttf') format('truetype');
+            }
+
+            @keyframes appear {
+                0% {
+                    transform: translateY(100%); 
+                    opacity: 0; 
+                }
+                100% {
+                    transform: translateY(0); 
+                    opacity: 1;
+                }
+    
+            }
+
+            .appearAnimation {
+                animation: appear 0.7s ease-out 1;
+            }
+
+            @keyframes appearWithoutMoving {
+                0% {
+                    opacity: 0; 
+                }
+                100% {
+                    opacity: 1;
+                }
+    
+            }
+
+            .appearWithoutMovingAnimation {
+                animation: appearWithoutMoving 1s ease-out 1;
+            }
+
+            body {
+                font-family: 'Roboto';
+                margin: 0px;
+                transition: 1s;
+            }
+
+            .alert {
+                opacity: 1;
+                transition: transform 0.6s ease-out;
+            }
+    
+            .alert.error {background-color: #f44336;}
+            .alert.success {background-color: #4CAF50;} /* Green */
+            .alert.info {background-color: #2196F3;} /* Blue */
+            .alert.warning {background-color: #ff9800;} /* Orange */
+    
+            .closebtn {
+                line-height: 20px;
+                cursor: pointer;
+                transition: 0.3s;
+            }
+    
+            .closebtn:hover {
+                color: black !important;
+            }         
+        </style>
+    </head>
+    <body>
+        {% if messages %}
+        <div id="messages" class="messages">
+            {% for message in messages %}
+                <div class="alert {{ message.tags }} alert-dismissible fade show text-light d-flex align-items-center justify-content-center fs-6 border-1 border-white" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="" aria-label="" onclick="closeAlert(this)"></button>
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        
+        
+        {% block content %}{% endblock %}
+
+
+        <script async defer>
+            function closeAlert(element) {
+                let alert = element.parentElement;
+                let container = document.getElementById('messages')
+                alert.style.transform = 'translateY(-100%)';
+                setTimeout(function() {
+                    alert.style.display = 'none';
+                    container.style.display = 'none'
+                }, 600); // Waits till transition is over
+            }
+        </script>
+    </body>
+</html>

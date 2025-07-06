@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'authentication/base.html' %}
 {% load static %}
 {% block title %}Delete my account{% endblock %}
 {% block description %}Delete your account with all your data{% endblock %}
@@ -14,7 +14,7 @@
             <div id="authenticationPart" class="mt-5 d-none">
                 <p class="fs-5 text-center">Please enter your password just to make sure ;)</p>
                 <div class="mb-3">
-                    <form class="d-flex flex-column align-items-center" action="{% url 'deleteaccount' %}" method="post">
+                    <form class="d-flex flex-column align-items-center" action="{% url 'authentication:deleteaccount' %}" method="post">
                         {% csrf_token %}
                         <input type="password" class="form-control form-control" required id="passwordPOST" name="passwordPOST" placeholder="Enter password here...">
                         <button class="btn btn-danger border-white mt-3 fs-5">Delete my account now!</button>

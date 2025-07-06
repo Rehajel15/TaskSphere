@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'authentication/base.html' %}
 {% block title %}Authentication{% endblock %}
 {% block description %}TaskSphere's main authentication page.{% endblock %}
 {% block header %}Authentication{% endblock %}
@@ -15,32 +15,32 @@
                     </div>
                     {% if not user.group == None %}
                     <div class="col-12">
-                        <a class="fs-4 mt-3 text-light" href="{% url 'leavegroup' %}">Leave the current group</a>
+                        <a class="fs-4 mt-3 text-light" href="{% url 'authentication:leavegroup' %}">Leave the current group</a>
                     </div>
                     {% else %}
                     <div class="col-12">
-                        <a class="fs-4 mt-3 text-light" href="{% url 'choosegroupaction' %}">Join or create a group</a>
+                        <a class="fs-4 mt-3 text-light" href="{% url 'authentication:choosegroupaction' %}">Join or create a group</a>
                     </div>
                     {% endif %}
                     <div class="col-12">
                         <span class="fs-4 font-monospace">---------------</span>
                     </div>
                     <div class="col-12">
-                        <a class="fs-4 mt-3 text-light" href="{% url 'deleteaccount' %}">Delete your account</a>
+                        <a class="fs-4 mt-3 text-light" href="{% url 'authentication:deleteaccount' %}">Delete your account</a>
                     </div>
                     <div class="col-12">
                         <span class="fs-4 font-monospace">---------------</span>
                     </div>
                     <div class="col-12">
-                        <a class="fs-4 mt-3 text-light" href="{% url 'signout' %}">Sign Out</a>
+                        <a class="fs-4 mt-3 text-light" href="{% url 'authentication:signout' %}">Sign Out</a>
                     </div>
                 </div>
             </div>
             {% else %}
             <span class="fs-4">What do you want to do?</span>
-            <a class="fs-4 mt-3 text-light fw-bold" href="{% url 'signin' %}">Sign In</a>
+            <a class="fs-4 mt-3 text-light fw-bold" href="{% url 'authentication:signin' %}">Sign In</a>
             <span class="fs-4 mt-3">or</span>
-            <a class="fs-4 mt-3 text-light fw-bold" href="{% url 'signup' %}">Sign Up</a>
+            <a class="fs-4 mt-3 text-light fw-bold" href="{% url 'authentication:signup' %}">Sign Up</a>
             {% endif %}
         </div>
     </div>

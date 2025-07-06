@@ -1,11 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'authentication/base.html' %}
 {% load static %}
 {% block title %}Sign Up{% endblock %}
 {% block description %}TaskSphere's sign-up page.{% endblock %}
 {% block header %}Sign Up{% endblock %}
 {% block content %}
 <div class="container appearAnimation text-white mt-3 mb-5 mt-lg-5">
-    <form method="post" action="{% url 'signup' %}" enctype="multipart/form-data">
+    <form method="post" action="{% url 'authentication:signup' %}" enctype="multipart/form-data">
         {% csrf_token %}
 
         <div class="form-group">
@@ -81,6 +81,6 @@
 </div>
 <div class="container appearAnimation d-flex align-items-center justify-content-start mb-5 mt-4 mt-md-5">
     <img src="{% static 'icons/arrow-left.svg' %}" alt="Arrow-left">
-    <a class="text-white ms-1" href="{% url 'signin' %}">I already have an account</a>
+    <a class="text-white ms-1" href="{% url 'authentication:signin' %}">I already have an account</a>
 </div>
 {% endblock %}

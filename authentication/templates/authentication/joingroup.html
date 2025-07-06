@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'authentication/base.html' %}
 {% load static %}
 {% block title %}Join an existing group{% endblock %}
 {% block description %}Join an existing group on TaskSphere{% endblock %}
@@ -9,7 +9,7 @@
 </div>
 
 <div class="container appearAnimation mt-3 mt-md-4">
-    <form action="{% url 'joingroup' %}" method="post" class="text-white">
+    <form action="{% url 'authentication:joingroup' %}" method="post" class="text-white">
         {% csrf_token %}
         <div class="mb-3">
             <label for="groupIDInput" class="form-label">Group ID</label>

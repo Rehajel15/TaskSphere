@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'authentication/base.html' %}
 {% load static %}
 {% block title %}Choose an action{% endblock %}
 {% block description %}Choose if you want to join an existing group or create one.{% endblock %}
@@ -8,8 +8,8 @@
     <div class="card text-center mb-3 bg-transparent border-1 border-white text-light mt-5" style="width: 18rem;">
         <div class="card-body">
           <h5 class="card-title fs-5">Hello {{username}}! <br><br> What do you want to do?</h5>
-          <a href="{% url 'joingroup' %}" class="btn btn-secondary border-1 border-white mt-3 fs-5 w-100">Join an existing group</a>
-          <a href="{% url 'creategroup' %}" class="btn btn-secondary border-1 border-white mt-5 fs-5 w-100">Create a new group</a>
+          <a href="{% url 'authentication:joingroup' %}" class="btn btn-secondary border-1 border-white mt-3 fs-5 w-100">Join an existing group</a>
+          <a href="{% url 'authentication:creategroup' %}" class="btn btn-secondary border-1 border-white mt-5 fs-5 w-100">Create a new group</a>
         </div>
     </div>
 </div>

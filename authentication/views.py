@@ -5,17 +5,18 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import SignUpForm, CreateGroupForm, getGroupGivenIDEndings
 from django.core.mail import send_mail
 from django.conf import settings
+from TaskSphere import urls
 
 
 # Create your views here.
 
 def main(request):
-    return render(request, 'main.html')
+    return render(request, 'authentication/main.html')
 
 def SignIn(request):
     if request.user.is_authenticated:
         messages.error(request, f"You can't sign in because you already are. To do this please sign out.")
-        return redirect("main")
+        return redirect("authentication:main")
     else:
         if request.method == 'POST':
             email = request.POST['emailInput']
@@ -23,26 +24,26 @@ def SignIn(request):
 
             if len(email) > 30:
                 messages.error(request, 'The entered email address is too long.')
-                return render(request, 'signin.html',)
+                return render(request, 'authentication/signin.html',)
 
             user = authenticate(request, email=email, password=password)
 
             if user is None:
                 messages.error(request, "Wrong email or password. Please try again.")
-                return redirect('signin')
+                return redirect('authentication:signin')
             else:
                 login(request, user)
                 if user.group is None:  # in_group is empty
-                    return redirect('main')
+                    return redirect('authentication:main')
                 else:
-                    return redirect('home')
+                    return redirect('home:main')
                 
-    return render(request, 'signin.html')
+    return render(request, 'authentication/signin.html')
 
 def SignUp(request):
     if request.user.is_authenticated:
         messages.error(request, "You can't sign up because you already are. To do this please sign out.")
-        return redirect('main')
+        return redirect('authentication:main')
     
     signUp_form = SignUpForm(request.POST or None, request.FILES or None)
 
@@ -63,27 +64,27 @@ def SignUp(request):
             #fail_silently=False,
         #)
 
-        return redirect('signin')
+        return redirect('authentication:signin')
     
-    return render(request, 'signup.html', {'signUp_form': signUp_form,})
+    return render(request, 'authentication/signup.html', {'signUp_form': signUp_form,})
 
 
 def ChooseGroupAction(request):
     if request.user.is_authenticated:
         if request.user.group is not None:
             messages.error(request, "You are already part of a group. Please leave the group first.")
-            return redirect('main')
+            return redirect('authentication:main')
         else:
-            return render(request, 'chooseGroupAction.html', {'username':request.user.firstname})
+            return render(request, 'authentication/chooseGroupAction.html', {'username':request.user.firstname})
     else:
         messages.error(request, "To have access to this page you need to sign in.")
-        return redirect('signin')
+        return redirect('authentication:signin')
 
 def CreateGroup(request):
     if request.user.is_authenticated:
         if request.user.group is not None:
             messages.error(request, "You are already part of a group. Please leave the group first.")
-            return redirect('main')
+            return redirect('authentication:main')
         else:
             createGroup_form = CreateGroupForm(request.POST or None)
             if request.method == 'POST' and createGroup_form.is_valid():
@@ -93,17 +94,17 @@ def CreateGroup(request):
                 request.user.group = group
                 request.user.save()
                 messages.success(request, "Group successfully created.")
-                return redirect('main')
-            return render(request, 'createGroup.html', {'createGroup_form': createGroup_form,})
+                return redirect('authentication:main')
+            return render(request, 'authentication/createGroup.html', {'createGroup_form': createGroup_form,})
     else:
         messages.error(request, "To have access to this page you need to sign in.")
-        return redirect('signin')
+        return redirect('authentication:signin')
 
 def JoinGroup(request):
     if request.user.is_authenticated:
         if request.user.group is not None:
             messages.error(request, "You already are part of a group. Please leave the group first.")
-            return redirect('main')
+            return redirect('authentication:main')
         else:
             if request.method == 'POST':
                 group_id = request.POST['groupIDInput'] + request.POST['groupIDEndingInput']
@@ -113,34 +114,34 @@ def JoinGroup(request):
                 
                 if not group_exists or not Group.objects.get(givenID=group_id).group_password == group_password:
                     messages.error(request, "You entered the wrong group id or password") 
-                    return render(request, 'joingroup.html', {'groupIDEnding': getGroupGivenIDEndings(), 'selected_value': request.POST['groupIDEndingInput'], 'group_id': request.POST['groupIDInput']})
+                    return render(request, 'authentication/joingroup.html', {'groupIDEnding': getGroupGivenIDEndings(), 'selected_value': request.POST['groupIDEndingInput'], 'group_id': request.POST['groupIDInput']})
                 else:
                     group = Group.objects.get(givenID=group_id)
                     request.user.group = group
                     request.user.save()
                     messages.success(request, f"You entered the group {group.group_name}.")
-                    return redirect('main')
+                    return redirect('home:main')
                     
-            return render(request, 'joingroup.html', {'groupIDEnding': getGroupGivenIDEndings()})
+            return render(request, 'authentication/joingroup.html', {'groupIDEnding': getGroupGivenIDEndings()})
     else:
         messages.error(request, "To have access to this page you need to sign in.")
-        return redirect('signin')
+        return redirect('authentication:signin')
     
 def LeaveGroup(request):
     if request.user.is_authenticated:
         if request.user.group is None:
             messages.error(request, "You are not part of a group.")
-            return redirect('main')
+            return redirect('authentication:main')
         else:
             user_group = request.user.group.group_name
             request.user.group = None
             request.user.save()
             messages.success(request, f'You left the group "{user_group}" successfully.')
 
-            return redirect('main')
+            return redirect('authentication:main')
     else:
         messages.error(request, "To have access to this page you need to sign in.")
-        return redirect('signin')
+        return redirect('authentication:signin')
 
 def DeleteAccount(request):
     if request.user.is_authenticated:
@@ -155,16 +156,16 @@ def DeleteAccount(request):
                 User.objects.get(email = user.email).delete()
                 # -----------------Send user email to confirm the deletion of the account--------------------------
                 messages.success(request, "Deleted your account successfully. We hope to see you again soon!")
-                return redirect("main")
+                return redirect("authentication:main")
             else:
                 messages.error(request, "You have entered the wrong password.")
-                return redirect('deleteaccount')
-        return render(request, 'deleteAccount.html')
+                return redirect('authentication:deleteaccount')
+        return render(request, 'authentication/deleteAccount.html')
     else:
         messages.error(request, "To have access to this page you need to sign in.")
-        return redirect('signin')
+        return redirect('authentication:signin')
 
 def SignOut(request):
     logout(request)
     messages.success(request, 'Successfully logged out.')
-    return redirect('signin')
+    return redirect('authentication:signin')
