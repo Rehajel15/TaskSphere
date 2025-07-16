@@ -96,12 +96,18 @@
         </div>
         {% endif %}
 
-        <nav class="navbar bg-info bg-opacity-75 fixed-top" data-bs-theme="dark">
-            <div class="ps-5">
-                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <a class="navbar-brand ms-4" href="{% url 'home:main' %}">{{user.group.group_name}}</a>
+        <nav class="navbar bg-info text-white bg-opacity-75 fixed-top" data-bs-theme="dark">
+            <div class="container-fluid px-2 px-sm-3 px-md-5">
+                <div>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <a class="navbar-brand ms-md-4 ms-2" href="{% url 'home:main' %}">{{user.group.group_name}}</a>
+                </div>
+                <div class="fs-5">
+                    {{user.firstname}}
+                    <img src="{{user.profile_picture.url}}" alt="Profile Picture" class="rounded-circle ms-2" style="width: 40px; height: 40px;">
+                </div>
                 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                     <div class="offcanvas-header">
                     <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
