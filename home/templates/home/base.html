@@ -81,7 +81,15 @@
     
             .closebtn:hover {
                 color: black !important;
-            }         
+            }
+            
+            .settings_btn {
+                transition: transform 1s ease-in-out;
+            }
+
+            .settings_btn:hover {
+                transform: rotate(180deg);
+            }
         </style>
     </head>
     <body>
@@ -102,11 +110,29 @@
                     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <a class="navbar-brand ms-md-4 ms-2" href="{% url 'home:main' %}">{{user.group.group_name}}</a>
+                    <a class="navbar-brand ms-md-4 ms-2" href="{% url 'home:main' %}">
+                        {% if user.group.group_name|length > 10 %}
+                            {{ user.group.group_name|slice:":10" }}...
+                        {% else %}
+                            {{ user.group.group_name }}
+                        {% endif %}
+                    </a>
                 </div>
-                <div class="fs-5">
-                    {{user.firstname}}
+                <div class="fs-5 me-3">
+                    <span class="d-sm-inline d-none">{{user.firstname}}</span>
                     <img src="{{user.profile_picture.url}}" alt="Profile Picture" class="rounded-circle ms-2" style="width: 40px; height: 40px;">
+                    <div class="btn-group ms-3">
+                        <button type="button" class="btn p-0 border-0 bg-transparent dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="width: 30px; height: 30px;">
+                            <img class="settings_btn" style="width: 30px; height: 30px;" src="{% static 'icons/gear.svg' %}" alt="Settings">
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'authentication:signout' %}">Sign out</a></li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                     <div class="offcanvas-header">
