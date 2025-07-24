@@ -43,7 +43,7 @@ class Table_taskColumn(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     column_name = models.CharField(max_length=30,)
     column_description = models.TextField(max_length=150, blank=True, null=True)
-    column_color = models.CharField(max_length=5, blank=False, null=False)
+    column_color = models.CharField(max_length=7, blank=False, null=False)
     table = models.ForeignKey(Table, related_name='taskColumns', on_delete=models.CASCADE)  # Connection with table
     position = models.IntegerField(null=False, blank=False)  # Beginning from the right
 

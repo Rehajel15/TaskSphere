@@ -119,7 +119,7 @@ def JoinGroup(request):
                     group = Group.objects.get(givenID=group_id)
                     request.user.group = group
                     request.user.save()
-                    messages.success(request, f"You entered the group {group.group_name}.")
+                    messages.success(request, f"You joined the group {group.group_name}.")
                     return redirect('home:main')
                     
             return render(request, 'authentication/joingroup.html', {'groupIDEnding': getGroupGivenIDEndings()})

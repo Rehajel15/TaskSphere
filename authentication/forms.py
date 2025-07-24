@@ -4,12 +4,24 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
 from authentication.models import User
-from home.models import Group, GroupGivenIDEnding
+from home.models import Group
+from django.conf import settings
+import os
+import json
 
 def getGroupGivenIDEndings():
     endings = {}
-    for entry in GroupGivenIDEnding.objects.all():
-        endings.update({entry.ending: entry.ending})
+    # Load endings from JSON file
+    json_file_path = os.path.join(settings.BASE_DIR, 'data', 'group_endings.json')
+
+    if os.path.exists(json_file_path):
+        with open(json_file_path, 'r', encoding='utf-8') as file:
+            try:
+                data = json.load(file)
+                for key, value in data.items():
+                    endings.update({value: value})
+            except json.JSONDecodeError:
+                raise ValidationError("Invalid JSON format in group_endings.json")
     return endings
 
 class SignUpForm(UserCreationForm):
