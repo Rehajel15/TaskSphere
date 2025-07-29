@@ -5,14 +5,6 @@ import uuid
 from datetime import datetime
 from django.core.validators import MaxValueValidator
 
-class GroupGivenIDEnding(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    ending = models.CharField(max_length=5)
-    whole_name = models.CharField(max_length=40)
-
-    def __str__(self):
-        return str(f"{self.ending}")
-
 class Group(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     group_name = models.CharField(max_length=30)
@@ -54,7 +46,7 @@ class Table_task(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     task_name = models.CharField(max_length=30)
     task_description = models.TextField(max_length=150, blank=True, null=True)
-    current_column = models.CharField(max_length=30)
+    current_column = models.ForeignKey(Table_taskColumn, related_name='tasks', on_delete=models.CASCADE)  # Connection with column
     current_worker = models.CharField(max_length=30) 
     deadLine = models.DateTimeField()
     created_on = models.DateTimeField(default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'), editable=False)
