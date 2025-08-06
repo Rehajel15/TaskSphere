@@ -11,5 +11,20 @@ def main(request):
         return redirect('authentication:choosegroupaction')
     else:
         # Assuming the user has a group and the group has a table
-        group_table = request.user.group.table 
-        return render(request, 'home/main.html', {"table":group_table})
+
+        task_filter = {
+            'ToDo': [],
+            'In_progress': [],
+            'Done': []
+        }
+
+        for task in request.user.group.table.tasks.all():
+            if task.current_column == 'ToDo':
+                task_filter['ToDo'].append(task)
+            elif task.current_column == 'In progress':
+                task_filter['In_progress'].append(task)
+            else: 
+                task_filter['Done'].append(task)
+            
+
+        return render(request, 'home/main.html', {"task_filter":task_filter})

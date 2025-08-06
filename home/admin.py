@@ -1,25 +1,12 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.html import format_html
-from .models import Group, Table, Table_taskColumn, Table_task
+from .models import Group, Table, Table_task
 
 class TableTaskInline(admin.TabularInline):
     model = Table_task
     extra = 1
 
-    def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
-        field = super().formfield_for_foreignkey(db_field, request, **kwargs)
-        if db_field.name == "current_column":
-            # request._obj_ wird im TableAdmin gesetzt
-            if hasattr(request, '_obj_') and request._obj_ is not None:
-                field.queryset = Table_taskColumn.objects.filter(table=request._obj_)
-            else:
-                field.queryset = Table_taskColumn.objects.none()
-        return field
-
-class TableTaskColumnInline(admin.TabularInline):
-    model = Table_taskColumn
-    extra = 1  
     
 class TableInline(admin.TabularInline):
     model = Table
@@ -48,7 +35,7 @@ class TableAdmin(admin.ModelAdmin):
     list_display = ('id', 'group')
     search_fields = ('id', 'group__givenID')
     readonly_fields = ('id', 'group')
-    inlines = [TableTaskColumnInline, TableTaskInline]
+    inlines = [TableTaskInline]
 
     def get_form(self, request, obj=None, **kwargs):
         # Übergibt das aktuelle Objekt an das Inline, damit das Queryset gefiltert werden kann

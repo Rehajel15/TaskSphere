@@ -31,22 +31,12 @@ class Table(models.Model):
         return str(self.id)
         
 
-class Table_taskColumn(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    column_name = models.CharField(max_length=30,)
-    column_description = models.TextField(max_length=150, blank=True, null=True)
-    column_color = models.CharField(max_length=7, blank=False, null=False)
-    table = models.ForeignKey(Table, related_name='taskColumns', on_delete=models.CASCADE)  # Connection with table
-    position = models.IntegerField(null=False, blank=False)  # Beginning from the right
-
-    def __str__(self):
-        return f"Name: {self.column_name} || ID: {self.id} || Table: {self.table}"
     
 class Table_task(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     task_name = models.CharField(max_length=30)
     task_description = models.TextField(max_length=150, blank=True, null=True)
-    current_column = models.ForeignKey(Table_taskColumn, related_name='tasks', on_delete=models.CASCADE)  # Connection with column
+    current_column = models.CharField(max_length=15, blank=False, null=False, choices=[('ToDo', 'ToDo'), ('In progress', 'In progress'), ('Done', 'Done')])
     current_worker = models.CharField(max_length=30) 
     deadLine = models.DateTimeField()
     created_on = models.DateTimeField(default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'), editable=False)
