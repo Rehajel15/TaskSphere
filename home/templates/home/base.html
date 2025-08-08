@@ -126,9 +126,8 @@
                             <img class="settings_btn" style="width: 30px; height: 30px;" src="{% static 'icons/gear.svg' %}" alt="Settings">
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><a class="dropdown-item" href="#">Profile settings</a></li>
+                            <li><a class="dropdown-item" href="#">Group profile</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="{% url 'authentication:signout' %}">Sign out</a></li>
                         </ul>
@@ -136,17 +135,35 @@
                 </div>
                 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                     <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">{{user.firstname}} {{user.lastname}} - {{ user.group.group_name|slice:":10" }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
-                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
+                    <div class="d-flex flex-column justify-content-between h-100">
+                        <div>
+                            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Employees</a>
+                                    <a class="nav-link" href="#">Messenger</a>
+                                    <a class="nav-link" href="#">Notifications</a>
+                                    <a class="nav-link" href="#">General settings</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                                <li class="nav-item d-flex flex-row justify-content-between">
+                                    <a class="nav-link text-white text-decoration-underline fs-6" href="#">Privacy Policy</a>
+                                    <a class="nav-link text-white text-decoration-underline fs-6" href="#">Terms of Use</a>
+                                    <a class="nav-link text-white text-decoration-underline fs-6" href="#">Imprint</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
