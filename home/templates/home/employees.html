@@ -1,0 +1,33 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block title %}Employees in your group{% endblock %}
+{% block description %}All employees in your group{% endblock %}
+
+{% block content %}
+<h4 class="text-light ms-4">A list of all employees in your group.</h4>
+
+<ul class="list-group px-5">
+    <li class="list-group-item list-group-item-dark" aria-current="true">
+        <img src="{{user.profile_picture.url}}" alt="Profile Picture" class="rounded-circle ms-2" style="width: 40px; height: 40px;">
+        <span class="ms-2">{{request.user.firstname}} {{request.user.lastname}}</span>
+    </li>
+    {% for user in request.user.group.users.all %}
+    {% if not user == request.user %}
+    <li class="list-group-item d-flex justify-content-between align-items-center" aria-current="true">
+        <div>
+            <img src="{{user.profile_picture.url}}" alt="Profile Picture" class="rounded-circle ms-2" style="width: 40px; height: 40px;">
+            <span class="ms-2">{{user.firstname}} {{user.lastname}}</span>
+        </div>
+        <div>
+            <button type="button" title="Message the person" class="btn btn-outline-secondary border-white p-0 border-2 rounded-circle me-3" style="width: 40px; height: 40px;">
+                <a href=""><img src="{% static 'icons/chat_symbol.svg' %}" alt="Messenger"></a>
+            </button>
+            <button type="button" title="Information about the person" class="btn btn-outline-secondary border-white p-0 border-2 rounded-circle" style="width: 40px; height: 40px;">
+                <a href=""><img src="{% static 'icons/person.svg' %}" alt="Information"></a>
+            </button>
+        </div>
+    </li>
+    {% endif %}
+    {% endfor %}
+</ul>
+{% endblock %}

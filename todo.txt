@@ -1,0 +1,4 @@
+1) User field with it's position in the company
+2) Search field in the employees list
+3) Add links to employees list 
+4) Link in the authentication app to come back to home

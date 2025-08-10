@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -143,13 +143,11 @@
                         <div>
                             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Employees</a>
-                                    <a class="nav-link" href="#">Messenger</a>
-                                    <a class="nav-link" href="#">Notifications</a>
-                                    <a class="nav-link" href="#">General settings</a>
+                                    <a class="nav-link {% if request.resolver_match.url_name == 'main' %}active{% endif %}" href="{% url 'home:main' %}">Home</a>
+                                    <a class="nav-link {% if request.resolver_match.url_name == 'employees_page' %}active{% endif %}" href="{% url 'home:employees_page' %}">Employees</a>
+                                    <a class="nav-link {% if request.resolver_match.url_name == 'messanger' %}active{% endif %}" href="#">Messenger</a>
+                                    <a class="nav-link {% if request.resolver_match.url_name == 'notifications' %}active{% endif %}" href="#">Notifications</a>
+                                    <a class="nav-link {% if request.resolver_match.url_name == 'general_settings' %}active{% endif %}" href="#">General settings</a>
                                 </li>
                             </ul>
                         </div>
@@ -157,9 +155,9 @@
                         <div>
                             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                                 <li class="nav-item d-flex flex-row justify-content-between">
-                                    <a class="nav-link text-white text-decoration-underline fs-6" href="#">Privacy Policy</a>
-                                    <a class="nav-link text-white text-decoration-underline fs-6" href="#">Terms of Use</a>
-                                    <a class="nav-link text-white text-decoration-underline fs-6" href="#">Imprint</a>
+                                    <a class="nav-link text-light text-decoration-underline fs-6" href="#">Data usage</a>
+                                    <a class="nav-link text-light text-decoration-underline fs-6" href="#">Terms of service</a>
+                                    <a class="nav-link text-light text-decoration-underline fs-6" href="#">Copyright page</a>
                                 </li>
                             </ul>
                         </div>
@@ -169,8 +167,9 @@
         </nav>
 
         
-        
-        {% block content %}{% endblock %}
+        <div style="margin-top: 80px;">
+            {% block content %}{% endblock %}
+        </div>
 
 
         <script async defer>
