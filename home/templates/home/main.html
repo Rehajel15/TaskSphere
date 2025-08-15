@@ -73,10 +73,28 @@
                 {% else %}
                 <p class="card-text">Current worker: <span class="fst-italic">No current worker...</span></p>
                 {% endif %}
-                <a href="#" class="btn btn-primary">Edit</a>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#{{task.id}}">Edit</button>
             </div>
             <div class="card-footer text-warning">
                 Deadline: {{task.deadLine}}
+            </div>
+        </div>
+
+        <div class="modal fade" id="{{task.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="{{task.task_name}}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">{{task.task_name}}</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Discard changes</button>
+                        <button type="button" class="btn btn-success">Save changes</button>
+                    </div>
+                </div>
             </div>
         </div>
         {% empty %}

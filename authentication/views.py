@@ -138,7 +138,7 @@ def LeaveGroup(request):
             request.user.save()
             messages.success(request, f'You left the group "{user_group}" successfully.')
 
-            return redirect('authentication:main')
+            return redirect('authentication:choosegroupaction')
     else:
         messages.error(request, "To have access to this page you need to sign in.")
         return redirect('authentication:signin')

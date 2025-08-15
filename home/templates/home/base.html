@@ -93,16 +93,6 @@
         </style>
     </head>
     <body>
-        {% if messages %}
-        <div id="messages" class="messages">
-            {% for message in messages %}
-                <div class="alert {{ message.tags }} alert-dismissible fade show text-light d-flex align-items-center justify-content-center fs-6 border-1 border-white" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="" aria-label="" onclick="closeAlert(this)"></button>
-                </div>
-            {% endfor %}
-        </div>
-        {% endif %}
 
         <nav class="navbar bg-info text-white bg-opacity-75 fixed-top" data-bs-theme="dark">
             <div class="container-fluid px-2 px-sm-3 px-md-4">
@@ -126,7 +116,7 @@
                             <img class="settings_btn" style="width: 30px; height: 30px;" src="{% static 'icons/gear.svg' %}" alt="Settings">
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">Profile settings</a></li>
+                            <li><a class="dropdown-item" href="#">My profile</a></li>
                             <li><a class="dropdown-item" href="#">Group profile</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="{% url 'authentication:signout' %}">Sign out</a></li>
@@ -168,6 +158,16 @@
 
         
         <div style="margin-top: 80px;">
+            {% if messages %}
+            <div id="messages" class="messages">
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }} alert-dismissible fade show text-light d-flex align-items-center justify-content-center fs-6 border-1 border-white" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="" aria-label="" onclick="closeAlert(this)"></button>
+                    </div>
+                {% endfor %}
+            </div>
+            {% endif %}
             {% block content %}{% endblock %}
         </div>
 

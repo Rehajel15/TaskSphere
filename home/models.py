@@ -34,7 +34,7 @@ class Table(models.Model):
     
 class Table_task(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    task_name = models.CharField(max_length=30)
+    task_name = models.CharField(max_length=30, unique=True)
     task_description = models.TextField(max_length=150, blank=True, null=True)
     current_column = models.CharField(max_length=15, blank=False, null=False, choices=[('ToDo', 'ToDo'), ('In progress', 'In progress'), ('Done', 'Done')])
     current_worker = models.CharField(max_length=30) 

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
+
 # Create your views here.
 def main(request):
     if not request.user.is_authenticated:
@@ -26,7 +27,6 @@ def main(request):
             else: 
                 task_filter['Done'].append(task)
             
-
         return render(request, 'home/main.html', {"task_filter":task_filter})
     
 def employees_page(request):
