@@ -2,10 +2,14 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.html import format_html
 from .models import Group, Table, Table_task
+from .forms import CreateTaskForm
+from authentication.forms import CreateGroupForm
 
 class TableTaskInline(admin.TabularInline):
     model = Table_task
+    form = CreateTaskForm
     extra = 1
+
 
     
 class TableInline(admin.TabularInline):
@@ -20,6 +24,7 @@ class GroupAdmin(admin.ModelAdmin):
     list_display = ('group_name', 'givenID', 'group_biography', 'group_password', 'created_on', 'id',)
     readonly_fields = ('created_on', 'get_users', 'id')
     search_fields = ('group_name', 'givenID')
+    form = CreateGroupForm
     inlines = [TableInline]
 
 
