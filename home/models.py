@@ -40,7 +40,7 @@ class Table_task(models.Model):
     current_worker = models.CharField(max_length=30) 
     deadLine = models.DateTimeField()
     created_on = models.DateTimeField(default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'), editable=False)
-    table = models.ForeignKey(Table, related_name='tasks', on_delete=models.CASCADE)  # Connection with table
+    table = models.ForeignKey(Table, related_name='tasks', on_delete=models.CASCADE, null=False, blank=False, editable=False)  # Connection with table
 
     def __str__(self):
         return f"Name: {self.task_name} || ID: {self.id} || Created on: {self.created_on} || Table: {self.table}"

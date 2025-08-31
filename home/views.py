@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from .forms import CreateTaskForm
 
 
 # Create your views here.
@@ -26,8 +27,10 @@ def main(request):
                 task_filter['In_progress'].append(task)
             else: 
                 task_filter['Done'].append(task)
+
+        createTask_form = CreateTaskForm(request.POST or None)
             
-        return render(request, 'home/main.html', {"task_filter":task_filter})
+        return render(request, 'home/main.html', {"task_filter":task_filter, "createTask_form": createTask_form})
     
 def employees_page(request):
     if not request.user.is_authenticated:

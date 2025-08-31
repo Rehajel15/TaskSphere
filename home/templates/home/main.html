@@ -88,11 +88,28 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        ...
+                        <form method="post" id="edit-task-{{task.id}}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                {{ createTask_form.task_name }}
+                            </div>
+                            <div class="mb-3">
+                                {{ createTask_form.task_description }}
+                            </div>
+                            <div class="mb-3">
+                                {{ createTask_form.current_column }}
+                            </div>
+                            <div class="mb-3">
+                                {{ createTask_form.current_worker }}
+                            </div>
+                            <div class="mb-3">
+                                {{ createTask_form.deadLine }}
+                            </div>
+                        </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Discard changes</button>
-                        <button type="button" class="btn btn-success">Save changes</button>
+                        <button onclick="deleteInputValue(this)" form="edit-task-{{task.id}}" type="submit" class="btn btn-success">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -102,4 +119,24 @@
         {% endfor %}
     </div>
 </div>
+
+<script>
+    function deleteInputValue(element) {
+        let formId = element.getAttribute('form');
+        let form = document.getElementById(formId);
+        if (!form) return;
+        let fields = form.querySelectorAll('input, select, textarea');
+        fields.forEach(function(field) {
+            // CSRF-Token nicht löschen
+            if (field.type === 'hidden' && field.name === 'csrfmiddlewaretoken') return;
+            if (field.type === 'checkbox' || field.type === 'radio') {
+                field.checked = false;
+            } else if (field.tagName.toLowerCase() === 'select') {
+                field.selectedIndex = 0;
+            } else {
+                field.value = '';
+            }
+        });
+    }
+</script>
 {% endblock %}
